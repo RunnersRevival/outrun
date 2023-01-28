@@ -26,7 +26,7 @@ const PriceRedRings = 9001
 
 var CharacterSonic = obj.Character{
 	strconv.Itoa(enums.CharaTypeSonic),
-	250,           // unlocked from the start, no cost
+	0,           // unlocked from the start, no cost
 	NumRedRings, // unused? characters can only be unlocked and leveled up thru rings
 	100000,      // used for limit breaking
 	50,          // red rings used for limit breaking
