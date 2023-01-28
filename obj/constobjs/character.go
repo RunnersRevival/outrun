@@ -26,7 +26,7 @@ const PriceRedRings = 9001
 
 var CharacterSonic = obj.Character{
 	strconv.Itoa(enums.CharaTypeSonic),
-	0,           // unlocked from the start, no cost
+	250,           // unlocked from the start, no cost
 	NumRedRings, // unused? characters can only be unlocked and leveled up thru rings
 	100000,      // used for limit breaking
 	50,          // red rings used for limit breaking
@@ -34,7 +34,7 @@ var CharacterSonic = obj.Character{
 
 var CharacterTails = obj.Character{
 	strconv.Itoa(enums.CharaTypeTails),
-	350,
+	250,
 	NumRedRings,
 	100000, // used for limit breaking
 	50,     // red rings used for limit breaking
@@ -42,7 +42,7 @@ var CharacterTails = obj.Character{
 
 var CharacterKnuckles = obj.Character{
 	strconv.Itoa(enums.CharaTypeKnuckles),
-	350,
+	250,
 	NumRedRings,
 	100000, // used for limit breaking
 	50,     // red rings used for limit breaking
@@ -50,7 +50,7 @@ var CharacterKnuckles = obj.Character{
 
 var CharacterAmy = obj.Character{
 	strconv.Itoa(enums.CharaTypeAmy),
-	400,
+	300,
 	NumRedRings,
 	100000, // used for limit breaking
 	50,     // red rings used for limit breaking
@@ -58,7 +58,7 @@ var CharacterAmy = obj.Character{
 
 var CharacterShadow = obj.Character{
 	strconv.Itoa(enums.CharaTypeShadow),
-	500,
+	450,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -66,7 +66,7 @@ var CharacterShadow = obj.Character{
 
 var CharacterBlaze = obj.Character{
 	strconv.Itoa(enums.CharaTypeBlaze),
-	550,
+	450,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -74,7 +74,7 @@ var CharacterBlaze = obj.Character{
 
 var CharacterRouge = obj.Character{
 	strconv.Itoa(enums.CharaTypeRouge),
-	550,
+	450,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -82,7 +82,7 @@ var CharacterRouge = obj.Character{
 
 var CharacterOmega = obj.Character{
 	strconv.Itoa(enums.CharaTypeOmega),
-	650,
+	600,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -90,7 +90,7 @@ var CharacterOmega = obj.Character{
 
 var CharacterBig = obj.Character{
 	strconv.Itoa(enums.CharaTypeBig),
-	700,
+	450,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -98,7 +98,7 @@ var CharacterBig = obj.Character{
 
 var CharacterCream = obj.Character{
 	strconv.Itoa(enums.CharaTypeCream),
-	750,
+	450,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -106,7 +106,7 @@ var CharacterCream = obj.Character{
 
 var CharacterEspio = obj.Character{
 	strconv.Itoa(enums.CharaTypeEspio),
-	650,
+	600,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -114,7 +114,7 @@ var CharacterEspio = obj.Character{
 
 var CharacterCharmy = obj.Character{
 	strconv.Itoa(enums.CharaTypeCharmy),
-	650,
+	600,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -122,7 +122,7 @@ var CharacterCharmy = obj.Character{
 
 var CharacterVector = obj.Character{
 	strconv.Itoa(enums.CharaTypeVector),
-	700,
+	600,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -130,7 +130,7 @@ var CharacterVector = obj.Character{
 
 var CharacterSilver = obj.Character{
 	strconv.Itoa(enums.CharaTypeSilver),
-	800,
+	750,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -138,7 +138,7 @@ var CharacterSilver = obj.Character{
 
 var CharacterMetalSonic = obj.Character{
 	strconv.Itoa(enums.CharaTypeMetalSonic),
-	900,
+	600,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -146,7 +146,7 @@ var CharacterMetalSonic = obj.Character{
 
 var CharacterAmitieAmy = obj.Character{
 	strconv.Itoa(enums.CharaTypeAmitieAmy),
-	2000,
+	900,
 	NumRedRings,
 	0, // used for limit breaking
 	0,     // red rings used for limit breaking
@@ -154,7 +154,7 @@ var CharacterAmitieAmy = obj.Character{
 
 var CharacterClassicSonic = obj.Character{
 	strconv.Itoa(enums.CharaTypeClassicSonic),
-	3000,
+	750,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -162,7 +162,7 @@ var CharacterClassicSonic = obj.Character{
 
 var CharacterTikal = obj.Character{
 	strconv.Itoa(enums.CharaTypeTikal),
-	1300,
+	750,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -170,7 +170,7 @@ var CharacterTikal = obj.Character{
 
 var CharacterGothicAmy = obj.Character{
 	strconv.Itoa(enums.CharaTypeGothicAmy),
-	2000,
+	900,
 	NumRedRings,
 	0, // used for limit breaking
 	0,     // red rings used for limit breaking
@@ -178,7 +178,7 @@ var CharacterGothicAmy = obj.Character{
 
 var CharacterHalloweenShadow = obj.Character{
 	strconv.Itoa(enums.CharaTypeHalloweenShadow),
-	2500,
+	900,
 	NumRedRings,
 	0, // used for limit breaking
 	0,     // red rings used for limit breaking
@@ -186,7 +186,7 @@ var CharacterHalloweenShadow = obj.Character{
 
 var CharacterHalloweenRouge = obj.Character{
 	strconv.Itoa(enums.CharaTypeHalloweenRouge),
-	2500,
+	900,
 	NumRedRings,
 	0, // used for limit breaking
 	0,     // red rings used for limit breaking
@@ -194,7 +194,7 @@ var CharacterHalloweenRouge = obj.Character{
 
 var CharacterHalloweenOmega = obj.Character{
 	strconv.Itoa(enums.CharaTypeHalloweenOmega),
-	2500,
+	900,
 	NumRedRings,
 	0, // used for limit breaking
 	0,     // red rings used for limit breaking
@@ -202,7 +202,7 @@ var CharacterHalloweenOmega = obj.Character{
 
 var CharacterMephiles = obj.Character{
 	strconv.Itoa(enums.CharaTypeMephiles),
-	1550,
+	750,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -210,7 +210,7 @@ var CharacterMephiles = obj.Character{
 
 var CharacterPSISilver = obj.Character{
 	strconv.Itoa(enums.CharaTypePSISilver),
-	2300,
+	750,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -218,7 +218,7 @@ var CharacterPSISilver = obj.Character{
 
 var CharacterXMasSonic = obj.Character{
 	enums.CTStrXMasSonic,
-	2200,
+	900,
 	NumRedRings,
 	0, // used for limit breaking
 	0,     // red rings used for limit breaking
@@ -226,7 +226,7 @@ var CharacterXMasSonic = obj.Character{
 
 var CharacterXMasTails = obj.Character{
 	enums.CTStrXMasTails,
-	2200,
+	900,
 	NumRedRings,
 	0, // used for limit breaking
 	0,     // red rings used for limit breaking
@@ -234,7 +234,7 @@ var CharacterXMasTails = obj.Character{
 
 var CharacterXMasKnuckles = obj.Character{
 	enums.CTStrXMasKnuckles,
-	2200,
+	900,
 	NumRedRings,
 	0, // used for limit breaking
 	0,     // red rings used for limit breaking
@@ -242,7 +242,7 @@ var CharacterXMasKnuckles = obj.Character{
 
 var CharacterWerehog = obj.Character{
 	strconv.Itoa(enums.CharaTypeWerehog),
-	800,
+	750,
 	NumRedRings,
 	500000, // used for limit breaking
 	200,    // red rings used for limit breaking
@@ -258,7 +258,7 @@ var CharacterSticks = obj.Character{
 
 var CharacterMarine = obj.Character{
 	strconv.Itoa(enums.CharaTypeMarine),
-	1300,
+	1200,
 	NumRedRings,
 	1200000, // used for limit breaking
 	200,     // red rings used for limit breaking
@@ -266,7 +266,7 @@ var CharacterMarine = obj.Character{
 
 var CharacterWhisper = obj.Character{
 	strconv.Itoa(enums.CharaTypeWhisper),
-	1300,
+	1200,
 	NumRedRings,
 	0, // used for limit breaking
 	0,     // red rings used for limit breaking
@@ -274,7 +274,7 @@ var CharacterWhisper = obj.Character{
 
 var CharacterTangle = obj.Character{
 	strconv.Itoa(enums.CharaTypeTangle),
-	1300,
+	1200,
 	NumRedRings,
 	0, // used for limit breaking
 	0,     // red rings used for limit breaking
