@@ -30,7 +30,7 @@ var RandomChaoWheelCharacterPrizes = map[string]float64{
 	//enums.CTStrPSISilver:       0.0, // Revival Event
 	enums.CTStrRouge:  0.3,
 	enums.CTStrShadow: 0.3,
-	//enums.CTStrMarine:          1.0, // Revival Event
+	enums.CTStrMarine:          1.0, // Revival Event
 	//enums.CTStrTangle: 1.0, // Revival Event
 	//enums.CTStrWhisper: 1.0, // Revival Event
 	//enums.CTStrSticks:          0.3, // Revival Event
@@ -134,11 +134,11 @@ var RandomChaoWheelChaoPrizes = map[string]float64{
 	enums.ChaoIDStrCaliburn:         1.2,
 	enums.ChaoIDStrKingArthursGhost: 1.0,
 	enums.ChaoIDStrRCTornado:        1.0,
-	enums.ChaoIDStrRCBattleCruiser:  0.7,
+	enums.ChaoIDStrRCBattleCruiser:  3.0,
 	enums.ChaoIDStrRedCrystalMonsterS: 1.0,
 	enums.ChaoIDStrRedCrystalMonsterL: 1.0,
 	enums.ChaoIDStrGoldenGoose:        1.0,
-	enums.ChaoIDStrRCPirateSpaceship: 0.7,
+	enums.ChaoIDStrRCPirateSpaceship: 3.0,
 	enums.ChaoIDStrGoldenAngel:       1.0,
 	enums.ChaoIDStrRCTornado2:           3.5, // Event (Sonic Adventure; Increase Odds During Event)
 	enums.ChaoIDStrChaos:                3.5, // Event (Sonic Adventure; Increase Odds During Event)
