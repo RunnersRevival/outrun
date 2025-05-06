@@ -16,31 +16,32 @@ var RandomChaoWheelCharacterPrizes = map[string]float64{
 	// characterID: load
 	// Hopefully this should sum up to 100 just for
 	// simplicity, but it shouldn't be a requirement.
-	enums.CTStrSonic:    0.3, // Initial character
-	enums.CTStrTails:    0.3, // Obtained in story mode
-	enums.CTStrKnuckles: 0.3, // Obtained in story mode
-	// enums.CTStrAmy:      0.3, //Purchasable Only (No Need to Re-Implement in Premium Roulette)
-	// enums.CTStrBig:      0.3, //Purchasable Only (No Need to Re-Implement in Premium Roulette)
-	//enums.CTStrBlaze:           1.0, // Revival Event (Sonic Rush)
-	enums.CTStrCharmy: 0.3,
-	// enums.CTStrCream:  0.3, //Purchasable Only (No Need to Re-Implement in Premium Roulette)
-	enums.CTStrEspio:  0.3,
-	//enums.CTStrMephiles:        0.0, // Revival Event
-	enums.CTStrOmega: 0.3,
-	//enums.CTStrPSISilver:       0.0, // Revival Event
-	enums.CTStrRouge:  0.3,
-	enums.CTStrShadow: 0.3,
-	//enums.CTStrMarine:          1.0, // Revival Event
-	//enums.CTStrTangle: 1.0, // Revival Event
-	//enums.CTStrWhisper: 1.0, // Revival Event
-	//enums.CTStrSticks:          0.3, // Revival Event
-	enums.CTStrTikal:           0.3, // Event (Sonic Adventure)
-	enums.CTStrVector: 0.3,
-	enums.CTStrWerehog:         0.3, // Revival Event
-	//enums.CTStrClassicSonic: 1.0, // Event (Birthday)
-	//enums.CTStrMetalSonic:      0.0, // Revival Event
+	enums.CTStrSonic:    0.81, // Initial character - all groups
+	enums.CTStrTails:    0.81, // Obtained in story mode - all groups
+	enums.CTStrKnuckles: 0.81, // Obtained in story mode - all groups
+	// enums.CTStrAmy:      0.81, //Group 2
+	// enums.CTStrBig:      0.81, //Group 2
+	enums.CTStrBlaze:           0.81, //Group 3
+	//enums.CTStrCharmy: 0.81, //Group 1
+	// enums.CTStrCream:  0.81, //Group 2
+	//enums.CTStrEspio:  0.81, //Group 1
+	//enums.CTStrMephiles:        0.81, // Group 2
+	//enums.CTStrOmega: 0.81, //Group 1
+	//enums.CTStrPSISilver:       0.81, // Group 2
+	//enums.CTStrRouge:  0.81, //Group 1
+	//enums.CTStrShadow: 0.81, //Group 1
+	enums.CTStrMarine:          0.81, // Group 3
+	enums.CTStrTangle: 0.81, // Group 3
+	enums.CTStrWhisper: 0.81, // Group 3
+	enums.CTStrSticks:          0.81, // Group 3
+	enums.CTStrTikal:           0.81, // Group 3
+	//enums.CTStrVector: 0.81, //Group 1
+	enums.CTStrWerehog:         0.81, // Group 3
+	//enums.CTStrClassicSonic: 0.81, // Group 2
+	//enums.CTStrMetalSonic:      0.81, // Group 1
+	//enums.CTStrSilver:      0.81, // Group 2
 
-	// enums.CTStrAmitieAmy:       1.0, // Event (Puyo Puyo Quest)
+	enums.CTStrAmitieAmy:       1.81, // Event (Puyo Puyo Quest)
 	// enums.CTStrGothicAmy:       0.0, // Revival Event
 	// enums.CTStrHalloweenShadow: 1.0, // Event (Halloween)
 	// enums.CTStrHalloweenRouge:  1.0, // Event (Halloween)
@@ -53,101 +54,101 @@ var RandomChaoWheelCharacterPrizes = map[string]float64{
 
 var RandomChaoWheelChaoPrizes = map[string]float64{
 	// TODO: Balance these
-	enums.ChaoIDStrHeroChao:             2.2, // Event (Animal Rescue event 1.0)
-	enums.ChaoIDStrGoldChao:             2.2, // Event (Animal Rescue event 1.0)
-	enums.ChaoIDStrDarkChao:             2.2, // Event (Animal Rescue event 1.0)
-	enums.ChaoIDStrJewelChao:            2.2, // Event (Animal Rescue event 1.0)
+	//enums.ChaoIDStrHeroChao:             3.0, // Event (Animal Rescue event 1.0)
+	//enums.ChaoIDStrGoldChao:             3.0, // Event (Animal Rescue event 1.0)
+	//enums.ChaoIDStrDarkChao:             3.0, // Event (Animal Rescue event 1.0)
+	//enums.ChaoIDStrJewelChao:            3.0, // Event (Animal Rescue event 1.0)
 	enums.ChaoIDStrNormalChao:           3.0, // Event (Animal Rescue event 1.0)
 	enums.ChaoIDStrOmochao:              3.0, // Event (Animal Rescue event 1.0)
-	enums.ChaoIDStrRCMonkey:             1.0, // Event (Animal Rescue event 1.0)
-	enums.ChaoIDStrRCSpring:             2.0,
+	//enums.ChaoIDStrRCMonkey:             1.0, // Event (Animal Rescue event 1.0)
+	enums.ChaoIDStrRCSpring:             3.0,
 	enums.ChaoIDStrRCElectromagnet:      2.0,
 	enums.ChaoIDStrBabyCyanWisp:         3.0,
 	enums.ChaoIDStrBabyIndigoWisp:       3.0,
 	enums.ChaoIDStrBabyYellowWisp:       3.0,
-	enums.ChaoIDStrRCPinwheel:           2.0,
-	enums.ChaoIDStrRCPiggyBank:          1.2,
-	enums.ChaoIDStrRCBalloon:            2.0,
-	enums.ChaoIDStrEasterChao:           3.5, // Event (Easter; Increase Odds During Event)
-	enums.ChaoIDStrEasterBunny:          3.5, // Event (Easter; Increase Odds During Event)
+	//enums.ChaoIDStrRCPinwheel:           3.0,
+	enums.ChaoIDStrRCPiggyBank:          3.0,
+	enums.ChaoIDStrRCBalloon:            3.0,
+	//enums.ChaoIDStrEasterChao:           3.5, // Event (Easter; Increase Odds During Event)
+	//enums.ChaoIDStrEasterBunny:          3.5, // Event (Easter; Increase Odds During Event)
 	//enums.ChaoIDStrMerlina:              1.5, // Event (Easter: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
 	//enums.ChaoIDStrPurplePapurisu:       2.5, // Event (Puyo Puyo Quest)
 	//enums.ChaoIDStrSuketoudara:          2.5, // Event (Puyo Puyo Quest)
 	//enums.ChaoIDStrCarbuncle:            2.5, // Event (Puyo Puyo Quest: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
-	enums.ChaoIDStrEggChao:           1.0,
-	enums.ChaoIDStrPumpkinChao:       1.0,
-	enums.ChaoIDStrSkullChao:         1.1,
-	enums.ChaoIDStrYacker:            1.0,
-	enums.ChaoIDStrRCGoldenPiggyBank: 1.0,
-	enums.ChaoIDStrWizardChao:        1.0,
-	enums.ChaoIDStrRCTurtle:          1.1,
-	enums.ChaoIDStrRCUFO:             1.1,
-	enums.ChaoIDStrRCBomber:          1.0,
-	//enums.ChaoIDStrStarShapedMissile:    0.0, // Event (Zazz Raid Boss; Increase Odds During Event)
-	//enums.ChaoIDStrRCSatellite:          0.0, // Event (Zazz Raid Boss; Increase Odds During Event)
+	enums.ChaoIDStrEggChao:           1.98,
+	enums.ChaoIDStrPumpkinChao:       1.98,
+	enums.ChaoIDStrSkullChao:         1.98,
+	enums.ChaoIDStrYacker:            1.98,
+	enums.ChaoIDStrRCGoldenPiggyBank: 1.98,
+	enums.ChaoIDStrWizardChao:        1.98,
+	//enums.ChaoIDStrRCTurtle:          1.98,
+	enums.ChaoIDStrRCUFO:             1.98,
+	//enums.ChaoIDStrRCBomber:          1.98,
+	//enums.ChaoIDStrStarShapedMissile:    1.98, // Event (Zazz Raid Boss; Increase Odds During Event)
+	enums.ChaoIDStrRCSatellite:          4.25, // Event (Zazz Raid Boss; Increase Odds During Event)
 	//enums.ChaoIDStrRCMoonMech:           0.0, // Event (Zazz Raid Boss; Only Obtainable through the Raid Boss Roulette, which is currently unavailable)
 	//enums.ChaoIDStrRappy:                1.0, // Event (Phantasy Star Online 2)
 	//enums.ChaoIDStrKuna:                 1.0, // Event (Phantasy Star Online 2)
-	//enums.ChaoIDStrMagLv1:               1.0, // Event (Phantasy Star Online 2)
-	enums.ChaoIDStrBlowfishTransporter:  1.0, // Event (Tropical Coast; Increase Odds During Event)
+	enums.ChaoIDStrMagLv1:               6.8, // Event (Phantasy Star Online 2)
+	//enums.ChaoIDStrBlowfishTransporter:  1.98, // Event (Tropical Coast; Increase Odds During Event)
 	//enums.ChaoIDStrMotherWisp:           1.2, // Event (Tropical Coast: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
-	enums.ChaoIDStrMarineChao:           1.0, // Event (Tropical Coast; Increase Odds During Event)
+	//enums.ChaoIDStrMarineChao:           1.98, // Event (Tropical Coast; Increase Odds During Event)
 	//enums.ChaoIDStrGenesis:              1.5, // Event (Birthday: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
 	//enums.ChaoIDStrCartridge:            1.5, // Event (Birthday; Increase Odds During Event)
 	//enums.ChaoIDStrDeathEgg:             1.0, // Event (Birthday; Increase Odds During Event)
-	enums.ChaoIDStrRCFighter:            1.0,
-	enums.ChaoIDStrRCHovercraft:         1.0,
-	enums.ChaoIDStrRCHelicopter:         1.0,
-	enums.ChaoIDStrGreenCrystalMonsterS: 1.0,
-	enums.ChaoIDStrGreenCrystalMonsterL: 1.0,
-	enums.ChaoIDStrRCAirship:            1.0,
-	enums.ChaoIDStrMagicLamp:            2.0, // Event (Desert Ruins and Animal Rescue 2.0; Increase Odds During Event)
+	//enums.ChaoIDStrRCFighter:            1.98,
+	//enums.ChaoIDStrRCHovercraft:         1.98,
+	enums.ChaoIDStrRCHelicopter:         1.98,
+	//enums.ChaoIDStrGreenCrystalMonsterS: 1.98,
+	//enums.ChaoIDStrGreenCrystalMonsterL: 1.98,
+	enums.ChaoIDStrRCAirship:            1.98,
+	//enums.ChaoIDStrMagicLamp:            2.0, // Event (Desert Ruins and Animal Rescue 2.0; Increase Odds During Event)
 	//enums.ChaoIDStrDesertChao:           3.0, // Event (Desert Ruins; Increase Odds During Event)
 	//enums.ChaoIDStrErazorDjinn:          2.5, // Event (Desert Ruins: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
 	//enums.ChaoIDStrNightopian:           2.0, // Event (NiGHTS)
 	//enums.ChaoIDStrNiGHTS:               2.0, // Event (NiGHTS)
 	//enums.ChaoIDStrReala:                2.0, // Event (NiGHTS)
-	enums.ChaoIDStrSonicOmochao:         1.0, // Event (Team Sonic Omochao)
-	enums.ChaoIDStrTailsOmochao:         1.0, // Event (Team Sonic Omochao)
-	enums.ChaoIDStrKnucklesOmochao:      1.0, // Event (Team Sonic Omochao)
+	//enums.ChaoIDStrSonicOmochao:         1.98, // Event (Team Sonic Omochao)
+	//enums.ChaoIDStrTailsOmochao:         1.98, // Event (Team Sonic Omochao)
+	//enums.ChaoIDStrKnucklesOmochao:      1.98, // Event (Team Sonic Omochao)
 	//enums.ChaoIDStrKingBoomBoo:          1.5, // Event (Halloween: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
-	enums.ChaoIDStrBoo:                  1.0, // Event (Halloween; Increase Odds During Event)
-	enums.ChaoIDStrHalloweenChao:        1.0, // Event (Halloween; Increase Odds During Event)
+	enums.ChaoIDStrBoo:                  1.98, // Event (Halloween; Increase Odds During Event)
+	//enums.ChaoIDStrHalloweenChao:        1.98, // Event (Halloween; Increase Odds During Event)
 	//enums.ChaoIDStrHeavyBomb:            1.2, // Event (Fantasy Zone)
 	//enums.ChaoIDStrOPapa:                1.5, // Event (Fantasy Zone)
 	//enums.ChaoIDStrOpaOpa:               1.5, // Event (Fantasy Zone)
-	enums.ChaoIDStrBlockBomb:  1.0,
-	enums.ChaoIDStrHunkofMeat: 1.3,
+	//enums.ChaoIDStrBlockBomb:  1.98,
+	enums.ChaoIDStrHunkofMeat: 1.98,
 	// enums.ChaoIDStrYeti:                 1.5, // Event (Christmas)
 	// enums.ChaoIDStrSnowChao:             2.0, // Event (Christmas)
 	// enums.ChaoIDStrChristmasYeti:        1.5, // Event (Christmas)
 	// enums.ChaoIDStrChristmasNiGHTS:      1.5, // Event (Christmas NiGHTS)
 	// enums.ChaoIDStrIdeya:                1.5, // Event (Christmas NiGHTS)
 	// enums.ChaoIDStrChristmasNightopian:  1.5, // Event (Christmas NiGHTS)
-	enums.ChaoIDStrOrbot:      1.0,
-	enums.ChaoIDStrCubot:      1.0,
-	enums.ChaoIDStrLightChaos: 1.5,
-	enums.ChaoIDStrHeroChaos:  1.5,
-	enums.ChaoIDStrDarkChaos:  1.5,
-	enums.ChaoIDStrChip:       1.5,
-	//enums.ChaoIDStrShahra:               0.0, // Runners' League Story Mode
-	enums.ChaoIDStrCaliburn:         1.2,
-	enums.ChaoIDStrKingArthursGhost: 1.0,
-	enums.ChaoIDStrRCTornado:        1.0,
-	enums.ChaoIDStrRCBattleCruiser:  0.7,
-	enums.ChaoIDStrRedCrystalMonsterS: 1.0,
-	enums.ChaoIDStrRedCrystalMonsterL: 1.0,
-	enums.ChaoIDStrGoldenGoose:        1.0,
-	enums.ChaoIDStrRCPirateSpaceship: 0.7,
-	enums.ChaoIDStrGoldenAngel:       1.0,
-	enums.ChaoIDStrRCTornado2:           1.0, // Event (Sonic Adventure; Increase Odds During Event)
-	enums.ChaoIDStrChaos:                1.0, // Event (Sonic Adventure; Increase Odds During Event)
-	enums.ChaoIDStrOrca:                 1.0, // Event (Sonic Adventure; Increase Odds During Event)
+	//enums.ChaoIDStrOrbot:      1.98,
+	//enums.ChaoIDStrCubot:      1.98,
+	enums.ChaoIDStrLightChaos: 1.8,
+	enums.ChaoIDStrHeroChaos:  1.8,
+	enums.ChaoIDStrDarkChaos:  1.8,
+	enums.ChaoIDStrChip:       1.8,
+	enums.ChaoIDStrShahra:               4.0, // Runners' League Story Mode
+	enums.ChaoIDStrCaliburn:         1.8,
+	enums.ChaoIDStrKingArthursGhost: 1.8,
+	//enums.ChaoIDStrRCTornado:        1.8,
+	//enums.ChaoIDStrRCBattleCruiser:  1/8,
+	enums.ChaoIDStrRedCrystalMonsterS: 1.8,
+	//enums.ChaoIDStrRedCrystalMonsterL: 1.8,
+	//enums.ChaoIDStrGoldenGoose:        1.8,
+	//enums.ChaoIDStrRCPirateSpaceship: 1.8,
+	enums.ChaoIDStrGoldenAngel:       1.8,
+	//enums.ChaoIDStrRCTornado2:           1.8, // Event (Sonic Adventure; Increase Odds During Event)
+	//enums.ChaoIDStrChaos:                1.8, // Event (Sonic Adventure; Increase Odds During Event)
+	enums.ChaoIDStrOrca:                 1.98, // Event (Sonic Adventure; Increase Odds During Event)
 	//enums.ChaoIDStrChaoWalker:           0.0, // Daily Battle
 	//enums.ChaoIDStrDarkQueen:            0.0, // Runners' League Timed Mode
-	enums.ChaoIDStrRCBlockFace: 1.0,
+	//enums.ChaoIDStrRCBlockFace: 1.8,
 	//enums.ChaoIDStrDFekt:                0.0, // Revival Event (assets TBD)
-	//enums.ChaoIDStrDarkChaoWalker:       0.0, // Daily Battle?
+	enums.ChaoIDStrDarkChaoWalker:       1.8, // Daily Battle?
 	//enums.ChaoIDStrPrideChaoL:           2.2, // Revival Event (Pride Month Celebration)
 	//enums.ChaoIDStrPrideChaoG:           2.2, // Revival Event (Pride Month Celebration)
 	//enums.ChaoIDStrPrideChaoB:           2.2, // Revival Event (Pride Month Celebration)
