@@ -62,7 +62,7 @@ var RandomChaoWheelChaoPrizes = map[string]float64{
 	enums.ChaoIDStrOmochao:              3.0, // Event (Animal Rescue event 1.0)
 	//enums.ChaoIDStrRCMonkey:             1.0, // Event (Animal Rescue event 1.0)
 	enums.ChaoIDStrRCSpring:             3.0,
-	enums.ChaoIDStrRCElectromagnet:      2.0,
+	enums.ChaoIDStrRCElectromagnet:      3.0,
 	enums.ChaoIDStrBabyCyanWisp:         3.0,
 	enums.ChaoIDStrBabyIndigoWisp:       3.0,
 	enums.ChaoIDStrBabyYellowWisp:       3.0,
@@ -94,7 +94,7 @@ var RandomChaoWheelChaoPrizes = map[string]float64{
 	//enums.ChaoIDStrMotherWisp:           1.2, // Event (Tropical Coast: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
 	//enums.ChaoIDStrMarineChao:           1.98, // Event (Tropical Coast; Increase Odds During Event)
 	//enums.ChaoIDStrGenesis:              1.5, // Event (Birthday: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
-	//enums.ChaoIDStrCartridge:            1.5, // Event (Birthday; Increase Odds During Event)
+	enums.ChaoIDStrCartridge:            1.98, // Event (Birthday; Increase Odds During Event)
 	//enums.ChaoIDStrDeathEgg:             1.0, // Event (Birthday; Increase Odds During Event)
 	//enums.ChaoIDStrRCFighter:            1.98,
 	//enums.ChaoIDStrRCHovercraft:         1.98,
