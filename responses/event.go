@@ -109,6 +109,8 @@ type EventUserRaidbossListResponse struct {
 }
 
 func DefaultEventUserRaidbossList(base responseobjs.BaseInfo, userRaidbossState netobj.EventUserRaidbossState) EventUserRaidbossListResponse {
+	// here we'll fetch the data from the DB in regards to the active or recently expired/defeated raid bosses
+
 	baseResponse := NewBaseResponse(base)
 	out := EventUserRaidbossListResponse{
 		baseResponse,
