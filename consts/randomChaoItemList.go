@@ -58,7 +58,7 @@ var RandomChaoWheelChaoPrizes = map[string]float64{
 	//enums.ChaoIDStrGoldChao:             3.0, // Event (Animal Rescue event 1.0) - Group 2
 	enums.ChaoIDStrDarkChao:             3.02, // Event (Animal Rescue event 1.0) - Group 1
 	enums.ChaoIDStrJewelChao:            3.02, // Event (Animal Rescue event 1.0) - Group 1
-	// enums.ChaoIDStrNormalChao:           3.02, // Event (Animal Rescue event 1.0) - Group 3
+	// enums.ChaoIDStrNormalChao:           3.7, // Event (Animal Rescue event 1.0) - Group 3
 	// enums.ChaoIDStrOmochao:              3.7, // Event (Animal Rescue event 1.0) - Group 3
 	//enums.ChaoIDStrRCMonkey:             3.7, // Event (Animal Rescue event 1.0) - Group 2
 	enums.ChaoIDStrRCSpring:             3.02, // Permanent Pool
