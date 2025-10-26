@@ -29,7 +29,7 @@ var DefaultEventRewardList = func() []obj.EventReward {
 		obj.NewEventReward(
 			4,
 			4000,
-			strconv.Itoa(int(enums.ChaoIDGenesis)),
+			strconv.Itoa(int(enums.ChaoIDKingBoomBoo)),
 			1,
 		),
 		obj.NewEventReward(
@@ -59,7 +59,7 @@ var DefaultEventRewardList = func() []obj.EventReward {
 		obj.NewEventReward(
 			9,
 			12000,
-			strconv.Itoa(int(enums.ChaoIDGenesis)),
+			strconv.Itoa(int(enums.ChaoIDKingBoomBoo)),
 			1,
 		),
 		obj.NewEventReward(
@@ -77,7 +77,7 @@ var DefaultEventRewardList = func() []obj.EventReward {
 		obj.NewEventReward(
 			12,
 			24000,
-			strconv.Itoa(int(enums.ChaoIDGenesis)),
+			strconv.Itoa(int(enums.ChaoIDKingBoomBoo)),
 			1,
 		),
 		obj.NewEventReward(
@@ -113,7 +113,7 @@ var DefaultEventRewardList = func() []obj.EventReward {
 		obj.NewEventReward(
 			18,
 			48000,
-			strconv.Itoa(int(enums.ChaoIDGenesis)),
+			strconv.Itoa(int(enums.ChaoIDKingBoomBoo)),
 			1,
 		),
 		obj.NewEventReward(
@@ -149,7 +149,7 @@ var DefaultEventRewardList = func() []obj.EventReward {
 		obj.NewEventReward(
 			24,
 			72000,
-			strconv.Itoa(int(enums.ChaoIDGenesis)),
+			strconv.Itoa(int(enums.ChaoIDKingBoomBoo)),
 			1,
 		),
 		obj.NewEventReward(
@@ -179,7 +179,7 @@ var DefaultEventRewardList = func() []obj.EventReward {
 		obj.NewEventReward(
 			29,
 			92000,
-			strconv.Itoa(int(enums.ChaoIDGenesis)),
+			strconv.Itoa(int(enums.ChaoIDKingBoomBoo)),
 			1,
 		),
 		obj.NewEventReward(
@@ -215,7 +215,7 @@ var DefaultEventRewardList = func() []obj.EventReward {
 		obj.NewEventReward(
 			35,
 			120000,
-			strconv.Itoa(int(enums.ChaoIDGenesis)),
+			strconv.Itoa(int(enums.ChaoIDKingBoomBoo)),
 			1,
 		),
 		obj.NewEventReward(
@@ -251,7 +251,7 @@ var DefaultEventRewardList = func() []obj.EventReward {
 		obj.NewEventReward(
 			41,
 			150000,
-			strconv.Itoa(int(enums.ChaoIDGenesis)),
+			strconv.Itoa(int(enums.ChaoIDKingBoomBoo)),
 			1,
 		),
 		obj.NewEventReward(
@@ -305,7 +305,7 @@ var DefaultEventRewardList = func() []obj.EventReward {
 		obj.NewEventReward(
 			50,
 			195000,
-			strconv.Itoa(int(enums.ChaoIDGenesis)),
+			strconv.Itoa(int(enums.ChaoIDKingBoomBoo)),
 			1,
 		),
 		obj.NewEventReward(
@@ -335,7 +335,7 @@ var DefaultEventRewardList = func() []obj.EventReward {
 		obj.NewEventReward(
 			55,
 			240000,
-			strconv.Itoa(int(enums.ChaoIDGenesis)),
+			strconv.Itoa(int(enums.ChaoIDKingBoomBoo)),
 			1,
 		),
 		obj.NewEventReward(
@@ -365,7 +365,7 @@ var DefaultEventRewardList = func() []obj.EventReward {
 		obj.NewEventReward(
 			60,
 			290000,
-			strconv.Itoa(int(enums.ChaoIDGenesis)),
+			strconv.Itoa(int(enums.ChaoIDKingBoomBoo)),
 			1,
 		),
 		obj.NewEventReward(
@@ -491,7 +491,7 @@ var DefaultEventRewardList = func() []obj.EventReward {
 		obj.NewEventReward(
 			81,
 			600000,
-			strconv.Itoa(int(enums.IDRouletteTicketPremium)),
+			strconv.Itoa(int(enums.IDRouletteTicketItem)),
 			10,
 		),
 		obj.NewEventReward(
@@ -534,7 +534,7 @@ var DefaultEventRewardList = func() []obj.EventReward {
 			88,
 			740000,
 			strconv.Itoa(int(enums.IDRouletteTicketPremium)),
-			15,
+			10,
 		),
 		obj.NewEventReward(
 			89,
@@ -545,8 +545,8 @@ var DefaultEventRewardList = func() []obj.EventReward {
 		obj.NewEventReward(
 			90,
 			800000,
-			strconv.Itoa(int(enums.CharaTypeClassicSonic)),
-			10,
+			strconv.Itoa(int(enums.IDRouletteTicketPremium)),
+			15,
 		),
 	}
 }
@@ -1683,3 +1683,4 @@ func GetPendingEventRewards(oldParam, newParam int64) ([]obj.EventReward, int64)
 	}
 	return pendingRewards, newParamRewardId
 }
+
