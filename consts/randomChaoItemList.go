@@ -42,7 +42,7 @@ var RandomChaoWheelCharacterPrizes = map[string]float64{
 	enums.CTStrSilver:      0.81, // Group 2
 
 	//enums.CTStrAmitieAmy:       1.81, // Event (Puyo Puyo Quest)
-	// enums.CTStrGothicAmy:       3.00, // Revival Event
+	enums.CTStrGothicAmy:       1.81, // Revival Event
 	// enums.CTStrHalloweenShadow: 1.81, // Event (Halloween)
 	// enums.CTStrHalloweenRouge:  1.81, // Event (Halloween)
 	// enums.CTStrHalloweenOmega:  1.81, // Event (Halloween)
