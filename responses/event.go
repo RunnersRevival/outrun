@@ -63,7 +63,7 @@ func DefaultEventRewardList(base responseobjs.BaseInfo) EventRewardListResponse 
 	// TODO: Maybe *don't* hardcode this mess? We'd have to recompile Outrun to change rewards.
 	return EventRewardList(
 		base,
-		constobjs.DefaultEventRewardList(),
+		constobjs.DefaultXmasEventRewardList(),
 	)
 }
 
