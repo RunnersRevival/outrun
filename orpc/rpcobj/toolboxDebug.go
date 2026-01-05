@@ -1225,3 +1225,84 @@ func (t *Toolbox) Debug_AddTransferCredentialsForPlayer(uid string, reply *Toolb
 	reply.Info = "OK"
 	return nil
 }
+
+// exports a player's full JSON data based on UID and username. to protect player data, a full player data export for a given player requires both the user ID and the username.
+func (t *Toolbox) Debug_ExportPlayerData(uidplususername string, reply *ToolboxReply) error {
+	if len(uidplususername) <= 10 {
+		reply.Status = StatusOtherError
+		reply.Info = "need uid and username to proceed. ex: \"1234567890Runners\""
+		return nil
+	}
+	uid := uidplususername[:10]
+	username := uidplususername[10:]
+	player, err := db.GetPlayer(uid)
+	if err != nil {
+		reply.Status = StatusOtherError
+		reply.Info = "unable to get player: " + err.Error()
+		return err
+	}
+	if player.Username != username {
+		reply.Status = StatusOtherError
+		reply.Info = "verification failed: \"" + username + "\" is not the correct username for uid " + uid
+		return nil
+	}
+	result, err := json.Marshal(player)
+	if err != nil {
+		reply.Status = StatusOtherError
+		reply.Info = "unable to marshal player data: " + err.Error()
+		return err
+	}
+	reply.Status = StatusOK
+	reply.Info = string(result)
+	return nil
+}
+
+// imports a player into the database, just as long as it doesn't conflict with another player
+func (t *Toolbox) Debug_ImportPlayerData(jsondata string, reply *ToolboxReply) error {
+	var importedPlayer netobj.Player
+	err := json.Unmarshal([]byte(jsondata), &importedPlayer)
+	if err != nil {
+		reply.Status = StatusOtherError
+		reply.Info = "unable to unmarshal JSON data: " + err.Error()
+		return err
+	}
+	if db.CheckPlayerExists(importedPlayer.ID) {
+		reply.Status = StatusOtherError
+		reply.Info = "a player with that UID already exists in the database"
+		return nil
+	}
+	err = db.SavePlayer(importedPlayer)
+	if err != nil {
+		reply.Status = StatusOtherError
+		reply.Info = fmt.Sprintf("error importing player %s: ", importedPlayer.ID) + err.Error()
+		return err
+	}
+	reply.Status = StatusOK
+	reply.Info = "OK"
+	return nil
+}
+
+// forcibly imports a player into the database, overwriting anything that might have been there before
+func (t *Toolbox) Debug_ForceImportPlayerData(jsondata string, reply *ToolboxReply) error {
+	var importedPlayer netobj.Player
+	err := json.Unmarshal([]byte(jsondata), &importedPlayer)
+	if err != nil {
+		reply.Status = StatusOtherError
+		reply.Info = "unable to unmarshal JSON data: " + err.Error()
+		return err
+	}
+	overwroteData := db.CheckPlayerExists(importedPlayer.ID)
+	err = db.SavePlayer(importedPlayer)
+	if err != nil {
+		reply.Status = StatusOtherError
+		reply.Info = fmt.Sprintf("error importing player %s: ", importedPlayer.ID) + err.Error()
+		return err
+	}
+	reply.Status = StatusOK
+	if overwroteData {
+		reply.Info = "OK - overwrote another player!"
+	} else {
+		reply.Info = "OK"
+	}
+	return nil
+}

@@ -141,6 +141,14 @@ func GetPlayer(uid string) (netobj.Player, error) {
 	return player, nil
 }
 
+func CheckPlayerExists(uid string) bool {
+	_, err := dbaccess.Get(consts.DBBucketPlayers, uid)
+	if err != nil {
+		return false
+	}
+	return true
+}
+
 func DeletePlayer(uid string) error {
 	err := dbaccess.Delete(consts.DBBucketPlayers, uid)
 	return err
