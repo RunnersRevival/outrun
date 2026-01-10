@@ -90,7 +90,7 @@ var RandomChaoWheelChaoPrizes = map[string]float64{
 	// enums.ChaoIDStrRCMoonMech:           3.67, // Event (Zazz Raid Boss; Only Obtainable through the Raid Boss Roulette, which is currently unavailable)
 	// enums.ChaoIDStrRappy:                4.25, // Event (Phantasy Star Online 2)
 	//enums.ChaoIDStrKuna:                 3.67, // Event (Phantasy Star Online 2)
-	//enums.ChaoIDStrMagLv1:               6.8, // Event (Phantasy Star Online 2)
+	enums.ChaoIDStrMagLv1:               6.18, // Event (Phantasy Star Online 2)
 	// enums.ChaoIDStrBlowfishTransporter:  1.98, // Event (Tropical Coast; Increase Odds During Event) - Group 2
 	//enums.ChaoIDStrMotherWisp:           1.2, // Event (Tropical Coast: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
 	enums.ChaoIDStrMarineChao:           1.98, // Event (Tropical Coast; Increase Odds During Event) - Group 1
