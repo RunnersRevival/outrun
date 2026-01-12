@@ -83,10 +83,10 @@ var RandomChaoWheelChaoPrizes = map[string]float64{
 	enums.ChaoIDStrRCGoldenPiggyBank: 1.98, // Permanent Pool
 	enums.ChaoIDStrWizardChao:        1.98, // Permanent Pool
 	enums.ChaoIDStrRCTurtle:          1.98, // Group 1
-	enums.ChaoIDStrRCUFO:             1.98, // Group 3
+	// enums.ChaoIDStrRCUFO:             1.98, // Group 3
 	// enums.ChaoIDStrRCBomber:          1.98, // Group 2
 	enums.ChaoIDStrStarShapedMissile:    1.98, // Event (Zazz Raid Boss; Increase Odds During Event) - Group 1
-	enums.ChaoIDStrRCSatellite:          1.98, // Event (Zazz Raid Boss; Increase Odds During Event) - Group 3
+	// enums.ChaoIDStrRCSatellite:          1.98, // Event (Zazz Raid Boss; Increase Odds During Event) - Group 3
 	// enums.ChaoIDStrRCMoonMech:           3.67, // Event (Zazz Raid Boss; Only Obtainable through the Raid Boss Roulette, which is currently unavailable)
 	// enums.ChaoIDStrRappy:                4.25, // Event (Phantasy Star Online 2)
 	//enums.ChaoIDStrKuna:                 3.67, // Event (Phantasy Star Online 2)
