@@ -132,7 +132,7 @@ var RandomChaoWheelChaoPrizes = map[string]float64{
 	enums.ChaoIDStrHeroChaos:  1.8, // Permanent Pool
 	enums.ChaoIDStrDarkChaos:  1.8, // Permanent Pool
 	enums.ChaoIDStrChip:       1.8, // Permanent Pool
-	enums.ChaoIDStrShahra:               1.81, // Runners' League Story Mode
+	enums.ChaoIDStrShahra:               4.0, // Runners' League Story Mode
 	enums.ChaoIDStrCaliburn:         1.8, // Permanent Pool
 	enums.ChaoIDStrKingArthursGhost: 1.8, // Permanent Pool
 	// enums.ChaoIDStrRCTornado:        1.8, // Group 2
