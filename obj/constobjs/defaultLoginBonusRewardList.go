@@ -11,26 +11,6 @@ var DefaultLoginBonusRewardList = func() []obj.LoginBonusReward {
 			[]obj.SelectReward{
 				obj.NewSelectReward(
 					[]obj.Item{
-						obj.NewItem(enums.ItemIDStrRing, 3000),
-						obj.NewItem(enums.ItemIDStrItemRouletteTicket, 1),
-					},
-				),
-			},
-		),
-		obj.NewLoginBonusReward(
-			[]obj.SelectReward{
-				obj.NewSelectReward(
-					[]obj.Item{
-						obj.NewItem(enums.ItemIDStrRing, 3000),
-						obj.NewItem(enums.ItemIDStrItemRouletteTicket, 1),
-					},
-				),
-			},
-		),
-		obj.NewLoginBonusReward(
-			[]obj.SelectReward{
-				obj.NewSelectReward(
-					[]obj.Item{
 						obj.NewItem(enums.ItemIDStrRing, 5000),
 						obj.NewItem(enums.ItemIDStrItemRouletteTicket, 1),
 					},
@@ -42,6 +22,26 @@ var DefaultLoginBonusRewardList = func() []obj.LoginBonusReward {
 				obj.NewSelectReward(
 					[]obj.Item{
 						obj.NewItem(enums.ItemIDStrRing, 5000),
+						obj.NewItem(enums.ItemIDStrItemRouletteTicket, 1),
+					},
+				),
+			},
+		),
+		obj.NewLoginBonusReward(
+			[]obj.SelectReward{
+				obj.NewSelectReward(
+					[]obj.Item{
+						obj.NewItem(enums.ItemIDStrRing, 7500),
+						obj.NewItem(enums.ItemIDStrItemRouletteTicket, 1),
+					},
+				),
+			},
+		),
+		obj.NewLoginBonusReward(
+			[]obj.SelectReward{
+				obj.NewSelectReward(
+					[]obj.Item{
+						obj.NewItem(enums.ItemIDStrRing, 7500),
 						obj.NewItem(enums.ItemIDStrItemRouletteTicket, 1),
 					},
 				),
@@ -52,17 +52,7 @@ var DefaultLoginBonusRewardList = func() []obj.LoginBonusReward {
 				obj.NewSelectReward(
 					[]obj.Item{
 						obj.NewItem(enums.ItemIDStrRedRing, 10),
-						obj.NewItem(enums.ItemIDStrRing, 5000),
-						obj.NewItem(enums.ItemIDStrItemRouletteTicket, 2),
-					},
-				),
-			},
-		),
-		obj.NewLoginBonusReward(
-			[]obj.SelectReward{
-				obj.NewSelectReward(
-					[]obj.Item{
-						obj.NewItem(enums.ItemIDStrRing, 10000),
+						obj.NewItem(enums.ItemIDStrRing, 7500),
 						obj.NewItem(enums.ItemIDStrItemRouletteTicket, 2),
 					},
 				),
@@ -73,6 +63,17 @@ var DefaultLoginBonusRewardList = func() []obj.LoginBonusReward {
 				obj.NewSelectReward(
 					[]obj.Item{
 						obj.NewItem(enums.ItemIDStrRedRing, 20),
+						obj.NewItem(enums.ItemIDStrRing, 10000),
+						obj.NewItem(enums.ItemIDStrItemRouletteTicket, 2),
+					},
+				),
+			},
+		),
+		obj.NewLoginBonusReward(
+			[]obj.SelectReward{
+				obj.NewSelectReward(
+					[]obj.Item{
+						obj.NewItem(enums.ItemIDStrPremiumRouletteTicket, 1),
 						obj.NewItem(enums.ItemIDStrRing, 15000),
 						obj.NewItem(enums.ItemIDStrItemRouletteTicket, 2),
 					},
