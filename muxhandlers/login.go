@@ -29,12 +29,12 @@ import (
 var ServerMode int64
 
 func contains(arr []string, value string) bool {
-    for _, v := range arr {
-        if v == value {
-            return true
-        }
-    }
-    return false
+	for _, v := range arr {
+		if v == value {
+			return true
+		}
+	}
+	return false
 }
 
 func Login(helper *helper.Helper) {
@@ -63,7 +63,7 @@ func Login(helper *helper.Helper) {
 			return
 		}
 	}
-	if request.Version != "2.2.4" && request.RevivalVerID != 7 && !config.CFile.LegacyCompatibilityMode {
+	if request.Version != "2.2.4" && request.RevivalVerID != 7 && request.RevivalVerID != 8 && !config.CFile.LegacyCompatibilityMode {
 		helper.Out("Client version too old or too new for this version of Outrun!")
 		baseInfo.StatusCode = status.VersionDifference
 		response := responses.NewBaseResponse(baseInfo)
@@ -115,8 +115,8 @@ func Login(helper *helper.Helper) {
 				0,
 				0,
 				"",
-				"This version of Sonic Runners Revival is no longer supported. Most likely the APK/IPA you've downloaded is the original release of Revival from 2019.\nEver since the release of 2.1.0 on December 10th, 2021, we've been regularly updating Sonic Runners Revival with support for modern devices, as well as bug fixes and all-new content.\n\nYou can find the latest version of Revival here: https://www.sonicrunners.com/#/download\nOur Twitter: https://twitter.com/runnersrevival\nOur Discord: https://discord.gg/T5ytR6T",
-				"This version of Sonic Runners Revival is no longer supported. Most likely the APK/IPA you've downloaded is the original release of Revival from 2019.\nEver since the release of 2.1.0 on December 10th, 2021, we've been regularly updating Sonic Runners Revival with support for modern devices, as well as bug fixes and all-new content.\n\nYou can find the latest version of Revival here: https://www.sonicrunners.com/#/download\nOur Twitter: https://twitter.com/runnersrevival\nOur Discord: https://discord.gg/T5ytR6T",
+				"This version of Sonic Runners Revival is no longer supported. Most likely the APK/IPA you've downloaded is the original release of Sonic Runners Revival from 2019.\nEver since the release of 2.1.0 on December 10th, 2021, we've been regularly updating Sonic Runners Revival with support for modern devices, as well as bug fixes and all-new content.\n\nYou can find the latest version of Sonic Runners Revival here: https://www.sonicrunners.com/#/download\nOur Twitter: https://twitter.com/runnersrevival\nOur Discord: https://discord.gg/T5ytR6T",
+				"This version of Sonic Runners Revival is no longer supported. Most likely the APK/IPA you've downloaded is the original release of Sonic Runners Revival from 2019.\nEver since the release of 2.1.0 on December 10th, 2021, we've been regularly updating Sonic Runners Revival with support for modern devices, as well as bug fixes and all-new content.\n\nYou can find the latest version of Sonic Runners Revival here: https://www.sonicrunners.com/#/download\nOur Twitter: https://twitter.com/runnersrevival\nOur Discord: https://discord.gg/T5ytR6T",
 				"https://sonicrunners.com/",
 			))
 			if err != nil {
@@ -520,7 +520,7 @@ func Migration(helper *helper.Helper) {
 	migrationUserPassword := request.LineAuth.MigrationUserPassword
 
 	baseInfo := helper.BaseInfo(emess.OK, status.OK)
-	
+
 	if ServerMode == 4 {
 		// authorized maintenance mode; lock out migration
 		baseInfo.StatusCode = status.ServerMaintenance
