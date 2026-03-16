@@ -10,7 +10,7 @@ var DefaultFirstLoginBonusRewardList = func() []obj.LoginBonusReward {
 					[]obj.Item{
 						obj.NewItem("900000", 10),
 						obj.NewItem("910000", 10000),
-						obj.NewItem("240000", 3),
+						obj.NewItem("240000", 1),
 					},
 				),
 			},
@@ -41,7 +41,7 @@ var DefaultFirstLoginBonusRewardList = func() []obj.LoginBonusReward {
 			[]obj.SelectReward{
 				obj.NewSelectReward(
 					[]obj.Item{
-						obj.NewItem("230000", 1),
+						obj.NewItem("230000", 3),
 						obj.NewItem("910000", 50000),
 						obj.NewItem("240000", 3),
 					},
@@ -53,8 +53,8 @@ var DefaultFirstLoginBonusRewardList = func() []obj.LoginBonusReward {
 				obj.NewSelectReward(
 					[]obj.Item{
 						obj.NewItem("300013", 1),
-						obj.NewItem("910000", 50000),
-						obj.NewItem("240000", 3),
+						obj.NewItem("910000", 75000),
+						obj.NewItem("240000", 5),
 					},
 				),
 			},
