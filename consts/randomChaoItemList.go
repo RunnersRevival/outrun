@@ -54,22 +54,22 @@ var RandomChaoWheelCharacterPrizes = map[string]float64{
 
 var RandomChaoWheelChaoPrizes = map[string]float64{
 	// TODO: Balance these
-	enums.ChaoIDStrHeroChao:             2.27, // Event (Animal Rescue event 1.0) - Permanent Pool
-	enums.ChaoIDStrGoldChao:             2.27, // Event (Animal Rescue event 1.0) - Permanent Pool
-	enums.ChaoIDStrDarkChao:             2.27, // Event (Animal Rescue event 1.0) - Permanent Pool
-	enums.ChaoIDStrJewelChao:            2.27, // Event (Animal Rescue event 1.0) - Permanent Pool
-	enums.ChaoIDStrNormalChao:           2.27, // Event (Animal Rescue event 1.0) - Permanent Pool
-	enums.ChaoIDStrOmochao:              2.27, // Event (Animal Rescue event 1.0) - Permanent Pool
-	enums.ChaoIDStrRCMonkey:             2.27, // Event (Animal Rescue event 1.0) - Permanent Pool
-	enums.ChaoIDStrRCSpring:             2.27, // Permanent Pool
-	enums.ChaoIDStrRCElectromagnet:      2.27, // Permanent Pool
-	enums.ChaoIDStrBabyCyanWisp:         2.27, // Permanent Pool
-	enums.ChaoIDStrBabyIndigoWisp:       2.27, // Permanent Pool
-	enums.ChaoIDStrBabyYellowWisp:       2.27, // Permanent Pool
-	enums.ChaoIDStrRCPinwheel:           2.27, // Permanent Pool
-	enums.ChaoIDStrRCPiggyBank:          2.27, // Permanent Pool
-	enums.ChaoIDStrRCBalloon:            2.27, // Permanent Pool
-	enums.ChaoIDStrEasterChao:           2.27, // Event (Easter; Increase Odds During Event) - Permanent Pool
+	enums.ChaoIDStrHeroChao:             2.13, // Event (Animal Rescue event 1.0) - Permanent Pool
+	enums.ChaoIDStrGoldChao:             2.13, // Event (Animal Rescue event 1.0) - Permanent Pool
+	enums.ChaoIDStrDarkChao:             2.13, // Event (Animal Rescue event 1.0) - Permanent Pool
+	enums.ChaoIDStrJewelChao:            2.13, // Event (Animal Rescue event 1.0) - Permanent Pool
+	enums.ChaoIDStrNormalChao:           2.13, // Event (Animal Rescue event 1.0) - Permanent Pool
+	enums.ChaoIDStrOmochao:              2.13, // Event (Animal Rescue event 1.0) - Permanent Pool
+	enums.ChaoIDStrRCMonkey:             2.13, // Event (Animal Rescue event 1.0) - Permanent Pool
+	enums.ChaoIDStrRCSpring:             2.13, // Permanent Pool
+	enums.ChaoIDStrRCElectromagnet:      2.13, // Permanent Pool
+	enums.ChaoIDStrBabyCyanWisp:         2.13, // Permanent Pool
+	enums.ChaoIDStrBabyIndigoWisp:       2.13, // Permanent Pool
+	enums.ChaoIDStrBabyYellowWisp:       2.13, // Permanent Pool
+	enums.ChaoIDStrRCPinwheel:           2.13, // Permanent Pool
+	enums.ChaoIDStrRCPiggyBank:          2.13, // Permanent Pool
+	enums.ChaoIDStrRCBalloon:            2.13, // Permanent Pool
+	enums.ChaoIDStrEasterChao:           2.13, // Event (Easter; Increase Odds During Event) - Permanent Pool
 	enums.ChaoIDStrEasterBunny:          1.03, // Event (Easter; Increase Odds During Event) - Permanent Pool
 	//enums.ChaoIDStrMerlina:              1.5, // Event (Easter: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
 	// enums.ChaoIDStrPurplePapurisu:       6.8, // Event (Puyo Puyo Quest)
