@@ -20,8 +20,8 @@ var RandomChaoWheelCharacterPrizes = map[string]float64{
 	enums.CTStrTails:    0.71, // Obtained in story mode - Permanent Pool
 	enums.CTStrKnuckles: 0.71, // Obtained in story mode - Permanent Pool
 	// enums.CTStrAmy:      0.71, // Permanent Pool; Purchasable Only
-	// enums.CTStrBig:      0.71, // Permanent Pool
-	// enums.CTStrBlaze:           0.71, // Permanent Pool
+	// enums.CTStrBig:      0.71, // Permanent Pool; Purchasable Only
+	enums.CTStrBlaze:           0.71, // Permanent Pool
 	// enums.CTStrCharmy: 0.71, // Permanent Pool; Purchasable Only
 	// enums.CTStrCream:  0.71, // Permanent Pool; Purchasable Only
 	// enums.CTStrEspio:  0.71, // Permanent Pool; Purchasable Only
@@ -35,7 +35,7 @@ var RandomChaoWheelCharacterPrizes = map[string]float64{
 	enums.CTStrWhisper: 0.71, // Permanent Pool
 	enums.CTStrSticks:          0.71, // Permanent Pool
 	enums.CTStrTikal:           0.71, // Permanent Pool
-	enums.CTStrVector: 0.71, // Permanent Pool
+	// enums.CTStrVector: 0.71, // Permanent Pool; Purchasable Only
 	enums.CTStrWerehog:         0.71, // Permanent Pool
 	enums.CTStrClassicSonic: 0.71, // Permanent Pool
 	enums.CTStrMetalSonic:      0.71, // Permanent Pool
