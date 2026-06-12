@@ -65,6 +65,10 @@ func GetPlayerState(helper *helper.Helper) {
 		player.PlayerState.DailyMissionEndTime = now.EndOfDay().UTC().Unix() + 1
 		helper.DebugOut("New daily mission ID: %v", player.PlayerState.DailyMissionID)
 	}
+	if player.PlayerState.NumRings < 0 { // player is in ring debt, set back to 0
+		player.PlayerState.NumRings = 0
+		helper.Warn("Player %s (%s) was in ring debt! Setting back to 0 rings... (ring deduction logic may have malfunctioned, please investigate!)", player.Username, player.ID)
+	}
 	err = db.SavePlayer(player)
 	if err != nil {
 		helper.InternalErr("Error saving player", err)
