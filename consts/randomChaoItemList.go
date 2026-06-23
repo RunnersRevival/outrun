@@ -1,7 +1,7 @@
 package consts
 
 import "github.com/RunnersRevival/outrun/enums"
-
+h
 type PrizeInfo struct {
 	AppearanceChance float64 // % chance for it to be chosen to be in wheel by the server
 	Type             int64   // 0 for Chao, 1 for Character
@@ -16,30 +16,30 @@ var RandomChaoWheelCharacterPrizes = map[string]float64{
 	// characterID: load
 	// Hopefully this should sum up to 100 just for
 	// simplicity, but it shouldn't be a requirement.
-	enums.CTStrSonic:    0.71, // Initial character - Permanent Pool
-	enums.CTStrTails:    0.71, // Obtained in story mode - Permanent Pool
-	enums.CTStrKnuckles: 0.71, // Obtained in story mode - Permanent Pool
-	// enums.CTStrAmy:      0.71, // Permanent Pool; Purchasable Only
-	// enums.CTStrBig:      0.71, // Permanent Pool; Purchasable Only
-	enums.CTStrBlaze:           0.71, // Permanent Pool
-	// enums.CTStrCharmy: 0.71, // Permanent Pool; Purchasable Only
-	// enums.CTStrCream:  0.71, // Permanent Pool; Purchasable Only
-	// enums.CTStrEspio:  0.71, // Permanent Pool; Purchasable Only
-	enums.CTStrMephiles:        0.71, // Permanent Pool
-	// enums.CTStrOmega: 0.71, // Permanent Pool; Purchasable Only
-	enums.CTStrPSISilver:       0.71, // Permanent Pool
-	// enums.CTStrRouge:  0.71, // Permanent Pool; Purchasable Only
-	// enums.CTStrShadow: 0.71, // Permanent Pool; Purchasable Only
-	enums.CTStrMarine:          0.71, // Permanent Pool
-	enums.CTStrTangle: 0.71, // Permanent Pool
-	enums.CTStrWhisper: 0.71, // Permanent Pool
-	enums.CTStrSticks:          0.71, // Permanent Pool
-	enums.CTStrTikal:           0.71, // Permanent Pool
-	// enums.CTStrVector: 0.71, // Permanent Pool; Purchasable Only
-	enums.CTStrWerehog:         0.71, // Permanent Pool
-	enums.CTStrClassicSonic: 0.71, // Permanent Pool
-	enums.CTStrMetalSonic:      0.71, // Permanent Pool
-	// enums.CTStrSilver:      0.71, // Permanent Pool; Purchasable Only
+	enums.CTStrSonic:    0.65, // Initial character - Permanent Pool
+	enums.CTStrTails:    0.65, // Obtained in story mode - Permanent Pool
+	enums.CTStrKnuckles: 0.65, // Obtained in story mode - Permanent Pool
+	// enums.CTStrAmy:      0.65, // Permanent Pool; Purchasable Only
+	// enums.CTStrBig:      0.65, // Permanent Pool; Purchasable Only
+	enums.CTStrBlaze:           0.65, // Permanent Pool
+	// enums.CTStrCharmy: 0.65, // Permanent Pool; Purchasable Only
+	// enums.CTStrCream:  0.65, // Permanent Pool; Purchasable Only
+	// enums.CTStrEspio:  0.65, // Permanent Pool; Purchasable Only
+	enums.CTStrMephiles:        0.65, // Permanent Pool
+	// enums.CTStrOmega: 0.65, // Permanent Pool; Purchasable Only
+	enums.CTStrPSISilver:       0.65, // Permanent Pool
+	// enums.CTStrRouge:  0.65, // Permanent Pool; Purchasable Only
+	// enums.CTStrShadow: 0.65, // Permanent Pool; Purchasable Only
+	enums.CTStrMarine:          0.65, // Permanent Pool
+	enums.CTStrTangle: 0.65, // Permanent Pool
+	enums.CTStrWhisper: 0.65, // Permanent Pool
+	enums.CTStrSticks:          0.65, // Permanent Pool
+	enums.CTStrTikal:           0.65, // Permanent Pool
+	// enums.CTStrVector: 0.65, // Permanent Pool; Purchasable Only
+	enums.CTStrWerehog:         0.65, // Permanent Pool
+	enums.CTStrClassicSonic: 1.5, // Permanent Pool
+	enums.CTStrMetalSonic:      0.65, // Permanent Pool
+	// enums.CTStrSilver:      0.65, // Permanent Pool; Purchasable Only
 
 	// enums.CTStrAmitieAmy:       1.81, // Event (Puyo Puyo Quest)
 	// enums.CTStrGothicAmy:       1.81, // Revival Event
@@ -70,63 +70,63 @@ var RandomChaoWheelChaoPrizes = map[string]float64{
 	enums.ChaoIDStrRCPiggyBank:          2.13, // Permanent Pool
 	enums.ChaoIDStrRCBalloon:            2.13, // Permanent Pool
 	enums.ChaoIDStrEasterChao:           2.13, // Event (Easter; Increase Odds During Event) - Permanent Pool
-	enums.ChaoIDStrEasterBunny:          0.31, // Event (Easter; Increase Odds During Event) - Permanent Pool
+	enums.ChaoIDStrEasterBunny:          0.21, // Event (Easter; Increase Odds During Event) - Permanent Pool
 	//enums.ChaoIDStrMerlina:              1.5, // Event (Easter: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
 	// enums.ChaoIDStrPurplePapurisu:       6.8, // Event (Puyo Puyo Quest)
 	//enums.ChaoIDStrSuketoudara:          2.5, // Event (Puyo Puyo Quest)
 	//enums.ChaoIDStrCarbuncle:            3.67, // Event (Puyo Puyo Quest: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
-	enums.ChaoIDStrEggChao:           0.31, // Permanent Pool
-	enums.ChaoIDStrPumpkinChao:       0.31, // Permanent Pool
-	enums.ChaoIDStrSkullChao:         0.31, // Permanent Pool
-	enums.ChaoIDStrYacker:            0.31, // Permanent Pool
-	enums.ChaoIDStrRCGoldenPiggyBank: 0.31, // Permanent Pool
-	enums.ChaoIDStrWizardChao:        0.31, // Permanent Pool
-	enums.ChaoIDStrRCTurtle:          0.31, // Permanent Pool
-	enums.ChaoIDStrRCUFO:             0.31, // Permanent Pool
-	enums.ChaoIDStrRCBomber:          0.31, // Permanent Pool
-	enums.ChaoIDStrStarShapedMissile:    0.31, // Event (Zazz Raid Boss; Increase Odds During Event) - Permanent Pool
-	enums.ChaoIDStrRCSatellite:          0.31, // Event (Zazz Raid Boss; Increase Odds During Event) - Permanent Pool
+	enums.ChaoIDStrEggChao:           0.21, // Permanent Pool
+	enums.ChaoIDStrPumpkinChao:       0.21, // Permanent Pool
+	enums.ChaoIDStrSkullChao:         0.21, // Permanent Pool
+	enums.ChaoIDStrYacker:            0.21, // Permanent Pool
+	enums.ChaoIDStrRCGoldenPiggyBank: 0.21, // Permanent Pool
+	enums.ChaoIDStrWizardChao:        0.21, // Permanent Pool
+	enums.ChaoIDStrRCTurtle:          0.21, // Permanent Pool
+	enums.ChaoIDStrRCUFO:             0.21, // Permanent Pool
+	enums.ChaoIDStrRCBomber:          0.21, // Permanent Pool
+	enums.ChaoIDStrStarShapedMissile:    0.21, // Event (Zazz Raid Boss; Increase Odds During Event) - Permanent Pool
+	enums.ChaoIDStrRCSatellite:          0.21, // Event (Zazz Raid Boss; Increase Odds During Event) - Permanent Pool
 	// enums.ChaoIDStrRCMoonMech:           3.67, // Event (Zazz Raid Boss; Only Obtainable through the Raid Boss Roulette, which is currently unavailable)
 	// enums.ChaoIDStrRappy:                4.25, // Event (Phantasy Star Online 2)
 	// enums.ChaoIDStrKuna:                 3.67, // Event (Phantasy Star Online 2)
 	// enums.ChaoIDStrMagLv1:               6.18, // Event (Phantasy Star Online 2)
-	enums.ChaoIDStrBlowfishTransporter:  0.31, // Event (Tropical Coast; Increase Odds During Event) - Permanent Pool
+	enums.ChaoIDStrBlowfishTransporter:  0.21, // Event (Tropical Coast; Increase Odds During Event) - Permanent Pool
 	//enums.ChaoIDStrMotherWisp:           1.2, // Event (Tropical Coast: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
-	enums.ChaoIDStrMarineChao:           0.31, // Event (Tropical Coast; Increase Odds During Event) - Permanent Pool
+	enums.ChaoIDStrMarineChao:           0.21, // Event (Tropical Coast; Increase Odds During Event) - Permanent Pool
 	//enums.ChaoIDStrGenesis:              1.5, // Event (Birthday: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
-	enums.ChaoIDStrCartridge:            0.31, // Event (Birthday; Increase Odds During Event) - Permanent Pool
- 	enums.ChaoIDStrDeathEgg:             1.16, // Event (Birthday; Increase Odds During Event) - Permanent Pool
-	enums.ChaoIDStrRCFighter:            0.31, // Permanent Pool
-	enums.ChaoIDStrRCHovercraft:         0.31, // Permanent Pool
-	enums.ChaoIDStrRCHelicopter:         0.31, // Permanent Pool
-	enums.ChaoIDStrGreenCrystalMonsterS: 0.31, // Permanent Pool
-	enums.ChaoIDStrGreenCrystalMonsterL: 0.31, // Permanent Pool
-	enums.ChaoIDStrRCAirship:            0.31, // Permanent Pool
-	enums.ChaoIDStrMagicLamp:            0.31, // Event (Desert Ruins and Animal Rescue 2.0; Increase Odds During Event) - Permanent Pool
-	enums.ChaoIDStrDesertChao:           0.31, // Event (Desert Ruins; Increase Odds During Event) - Permanent Pool
+	enums.ChaoIDStrCartridge:            3.4, // Event (Birthday; Increase Odds During Event) - Permanent Pool
+ 	enums.ChaoIDStrDeathEgg:             2.2, // Event (Birthday; Increase Odds During Event) - Permanent Pool
+	enums.ChaoIDStrRCFighter:            0.21, // Permanent Pool
+	enums.ChaoIDStrRCHovercraft:         0.21, // Permanent Pool
+	enums.ChaoIDStrRCHelicopter:         0.21, // Permanent Pool
+	enums.ChaoIDStrGreenCrystalMonsterS: 0.21, // Permanent Pool
+	enums.ChaoIDStrGreenCrystalMonsterL: 0.21, // Permanent Pool
+	enums.ChaoIDStrRCAirship:            0.21, // Permanent Pool
+	enums.ChaoIDStrMagicLamp:            0.21, // Event (Desert Ruins and Animal Rescue 2.0; Increase Odds During Event) - Permanent Pool
+	enums.ChaoIDStrDesertChao:           0.21, // Event (Desert Ruins; Increase Odds During Event) - Permanent Pool
 	// enums.ChaoIDStrErazorDjinn:          4.0, // Event (Desert Ruins: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
 	// enums.ChaoIDStrNightopian:           4.25, // Event (NiGHTS)
 	// enums.ChaoIDStrNiGHTS:               3.67, // Event (NiGHTS)
 	// enums.ChaoIDStrReala:                3.67, // Event (NiGHTS)
-	enums.ChaoIDStrSonicOmochao:         0.31, // Event (Team Sonic Omochao) - Permanent Pool
-	enums.ChaoIDStrTailsOmochao:         0.31, // Event (Team Sonic Omochao) - Permanent Pool
-	enums.ChaoIDStrKnucklesOmochao:      0.31, // Event (Team Sonic Omochao) - Permanent Pool
+	enums.ChaoIDStrSonicOmochao:         0.21, // Event (Team Sonic Omochao) - Permanent Pool
+	enums.ChaoIDStrTailsOmochao:         0.21, // Event (Team Sonic Omochao) - Permanent Pool
+	enums.ChaoIDStrKnucklesOmochao:      0.21, // Event (Team Sonic Omochao) - Permanent Pool
 	//enums.ChaoIDStrKingBoomBoo:          1.5, // Event (Halloween: Premium Roulette for Timed Mode Event Only; Obtainable through Rewards List Only for Story Event)
-	enums.ChaoIDStrBoo:                  0.31, // Event (Halloween; Increase Odds During Event) - Permanent Pool
-	enums.ChaoIDStrHalloweenChao:        0.31, // Event (Halloween; Increase Odds During Event) - Permanent Pool
+	enums.ChaoIDStrBoo:                  0.21, // Event (Halloween; Increase Odds During Event) - Permanent Pool
+	enums.ChaoIDStrHalloweenChao:        0.21, // Event (Halloween; Increase Odds During Event) - Permanent Pool
 	// enums.ChaoIDStrHeavyBomb:            4.25, // Event (Fantasy Zone)
 	// enums.ChaoIDStrOPapa:                3.4, // Event (Fantasy Zone)
 	// enums.ChaoIDStrOpaOpa:               3.67, // Event (Fantasy Zone)
-	enums.ChaoIDStrBlockBomb:  0.31, // Permanent Pool
-	enums.ChaoIDStrHunkofMeat: 0.31, // Permanent Pool
+	enums.ChaoIDStrBlockBomb:  0.21, // Permanent Pool
+	enums.ChaoIDStrHunkofMeat: 0.21, // Permanent Pool
 	// enums.ChaoIDStrYeti:                 3.58, // Event (Christmas)
 	// enums.ChaoIDStrSnowChao:             3.58, // Event (Christmas)
 	// enums.ChaoIDStrChristmasYeti:        1.5, // Event (Christmas)
 	// enums.ChaoIDStrChristmasNiGHTS:      4.0, // Event (Christmas NiGHTS)
 	// enums.ChaoIDStrIdeya:                3.58, // Event (Christmas NiGHTS)
 	// enums.ChaoIDStrChristmasNightopian:  3.58, // Event (Christmas NiGHTS)
-	enums.ChaoIDStrOrbot:      0.31, // Permanent Pool
-	enums.ChaoIDStrCubot:      0.31, // Permanent Pool
+	enums.ChaoIDStrOrbot:      0.21, // Permanent Pool
+	enums.ChaoIDStrCubot:      0.21, // Permanent Pool
 	enums.ChaoIDStrLightChaos: 1.16, // Permanent Pool
 	enums.ChaoIDStrHeroChaos:  1.16, // Permanent Pool
 	enums.ChaoIDStrDarkChaos:  1.16, // Permanent Pool
@@ -143,7 +143,7 @@ var RandomChaoWheelChaoPrizes = map[string]float64{
 	enums.ChaoIDStrGoldenAngel:       1.16, // Permanent Pool
 	enums.ChaoIDStrRCTornado2:           1.16, // Event (Sonic Adventure; Increase Odds During Event) - Permanent Pool
 	enums.ChaoIDStrChaos:                1.16, // Event (Sonic Adventure; Increase Odds During Event) - Permanent Pool
-	enums.ChaoIDStrOrca:                 0.31, // Event (Sonic Adventure; Increase Odds During Event) - Permanent Pool
+	enums.ChaoIDStrOrca:                 0.21, // Event (Sonic Adventure; Increase Odds During Event) - Permanent Pool
 	//enums.ChaoIDStrChaoWalker:           0.0, // Daily Battle
 	// enums.ChaoIDStrDarkQueen:            3.67, // Runners' League Timed Mode
 	enums.ChaoIDStrRCBlockFace: 1.16, // Permanent Pool
