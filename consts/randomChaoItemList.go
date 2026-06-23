@@ -1,7 +1,7 @@
 package consts
 
 import "github.com/RunnersRevival/outrun/enums"
-h
+
 type PrizeInfo struct {
 	AppearanceChance float64 // % chance for it to be chosen to be in wheel by the server
 	Type             int64   // 0 for Chao, 1 for Character
