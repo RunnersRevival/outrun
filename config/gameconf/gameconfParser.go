@@ -67,6 +67,7 @@ var Defaults = map[string]interface{}{
 	"DEnableVerification":        true,
 	"DPenalizeUnverifiables":     false,
 	"DEnableDailyBattles":        true,
+	"DUseRingsAsExp":              true,
 }
 
 var CFile ConfigFile
@@ -89,6 +90,7 @@ type ConfigFile struct {
 	EnableVerification        bool   `json:"enableVerification,omitempty"`
 	PenalizeUnverifiables     bool   `json:"penalizeUnverifiables,omitempty"`
 	EnableDailyBattles        bool   `json:"enableDailyBattles,omitempty"`
+	UseRingsAsExp             bool   `json:"useRingsAsExp,omitempty"` // When set to false, a score-based algorithm will be used for XP.
 }
 
 func Parse(filename string) error {
@@ -110,6 +112,7 @@ func Parse(filename string) error {
 		Defaults["DEnableVerification"].(bool),
 		Defaults["DPenalizeUnverifiables"].(bool),
 		Defaults["DEnableDailyBattles"].(bool),
+		Defaults["DUseRingsAsExp"].(bool),
 	}
 	file, err := loadFile(filename)
 	if err != nil {
