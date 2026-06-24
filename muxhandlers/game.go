@@ -500,10 +500,11 @@ func QuickPostGameResults(helper *helper.Helper) {
 		}
 
 		// increase character(s)'s experience
+		expIncrease := 0
 		if gameconf.CFile.UseRingsAsExp {
-			expIncrease := request.Rings + request.FailureRings // all rings collected
+			expIncrease = request.Rings + request.FailureRings // all rings collected
 		} else {
-			expIncrease := request.Score / 5000
+			expIncrease = request.Score / 5000
 		}
 		
 		mainAbilityIndex := 1
@@ -870,11 +871,12 @@ func PostGameResults(helper *helper.Helper) {
 		}
 
 		// increase character(s)'s experience
+		expIncrease := 0
 		if gameconf.CFile.UseRingsAsExp {
-			expIncrease := request.Rings + request.FailureRings // all rings collected
+			expIncrease = request.Rings + request.FailureRings // all rings collected
 		} else {
-			expIncrease := request.Score / 5000
-			if request.BossDestroyed {
+			expIncrease = request.Score / 5000
+			if request.BossDestroyed != 0 {
 				// TODO: check to see if this is right! we might need to do additional checks here to make sure the game actually wants to move onto the next stage, since if it's on the same mileage point assume the boss isn't defeated and set XP to 0
 				expIncrease = 2000
 			}
