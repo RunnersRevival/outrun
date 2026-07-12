@@ -50,16 +50,16 @@ var RandomItemListNormalWheel = []string{
 }
 
 var NormalWheelItemAmountRange = map[string]AmountRange{
-	enums.ItemIDStrInvincible: AmountRange{1, 5, 1},
-	enums.ItemIDStrBarrier:    AmountRange{1, 5, 1},
-	enums.ItemIDStrMagnet:     AmountRange{1, 5, 1},
-	enums.ItemIDStrTrampoline: AmountRange{1, 5, 1},
-	enums.ItemIDStrCombo:      AmountRange{1, 5, 1},
-	enums.ItemIDStrLaser:      AmountRange{1, 5, 1},
-	enums.ItemIDStrDrill:      AmountRange{1, 5, 1},
-	enums.ItemIDStrAsteroid:   AmountRange{1, 5, 1},
+	enums.ItemIDStrInvincible: AmountRange{2, 5, 1},
+	enums.ItemIDStrBarrier:    AmountRange{2, 5, 1},
+	enums.ItemIDStrMagnet:     AmountRange{2, 5, 1},
+	enums.ItemIDStrTrampoline: AmountRange{2, 5, 1},
+	enums.ItemIDStrCombo:      AmountRange{2, 5, 1},
+	enums.ItemIDStrLaser:      AmountRange{2, 5, 1},
+	enums.ItemIDStrDrill:      AmountRange{2, 5, 1},
+	enums.ItemIDStrAsteroid:   AmountRange{2, 5, 1},
 	enums.ItemIDStrRedRing:    AmountRange{5, 25, 5},
-	enums.ItemIDStrRing:       AmountRange{500, 2500, 500},
+	enums.ItemIDStrRing:       AmountRange{2500, 5000, 500},
 	//strconv.Itoa(enums.IDTypeItemRouletteWin): AmountRange{1, 1, 1},
 }
 
@@ -86,8 +86,8 @@ var BigWheelItemAmountRange = map[string]AmountRange{
 	enums.ItemIDStrLaser:      AmountRange{5, 10, 1},
 	enums.ItemIDStrDrill:      AmountRange{5, 10, 1},
 	enums.ItemIDStrAsteroid:   AmountRange{5, 10, 1},
-	enums.ItemIDStrRedRing:    AmountRange{10, 50, 10},
-	enums.ItemIDStrRing:       AmountRange{2500, 5000, 500},
+	enums.ItemIDStrRedRing:    AmountRange{20, 50, 10},
+	enums.ItemIDStrRing:       AmountRange{5000, 10000, 1000},
 	//strconv.Itoa(enums.IDTypeItemRouletteWin): AmountRange{1, 1, 1},
 }
 
@@ -114,7 +114,7 @@ var SuperWheelItemAmountRange = map[string]AmountRange{
 	enums.ItemIDStrLaser:      AmountRange{10, 20, 2},
 	enums.ItemIDStrDrill:      AmountRange{10, 20, 2},
 	enums.ItemIDStrAsteroid:   AmountRange{10, 20, 2},
-	enums.ItemIDStrRedRing:    AmountRange{20, 160, 20},
-	enums.ItemIDStrRing:       AmountRange{5000, 10000, 1000},
+	enums.ItemIDStrRedRing:    AmountRange{40, 160, 20},
+	enums.ItemIDStrRing:       AmountRange{25000, 75000, 5000},
 	//strconv.Itoa(enums.IDTypeItemRouletteWin): AmountRange{1, 1, 1},
 }
