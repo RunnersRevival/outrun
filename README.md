@@ -4,45 +4,46 @@
 
 Outrun for Revival is a fork of Outrun, a custom server for Sonic Runners reverse engineered from the [Sonic Runners Revival](https://sonic.runner.es/) project back during the Open Beta. It is intended for use on the Sonic Runners Revival server, but can be used for your own private servers as well.
 
-Unlike the master and mysql_testing branches, this version can still be used with 2.0.3. Code changes we do to Outrun for Revival may be backported to this branch occasionally, so you won't miss out on the latest bug fixes. However, since this version of Outrun relies on 2.0.3, no Revival-exclusive content can be used.
+Unlike the master and mysql\_testing branches, this version can still be used with 2.0.3. Code changes we do to Outrun for Revival may be backported to this branch occasionally, so you won't miss out on the latest bug fixes. However, since this version of Outrun relies on 2.0.3, no Revival-exclusive content can be used.
 
 ### Current functionality
 
 Notable:
-  - Timed Mode
-  - Story Mode
-  - Ring/Red Star Ring keeping
-  - Functional shop
-  - Character/Chao equipping
-  - Character leveling and progression
-  - Item/Chao roulette functionality
-  - Events
-  - Campaigns
-  - Basic ranking
-  - Login Bonuses
-  - Daily Challenge
+
+* Timed Mode
+* Story Mode
+* Ring/Red Star Ring keeping
+* Functional shop
+* Character/Chao equipping
+* Character leveling and progression
+* Item/Chao roulette functionality
+* Events
+* Campaigns
+* Basic ranking
+* Login Bonuses
+* Daily Challenge
 
 Functional:
-  - Android and iOS support
-  - High score keeping
-  - In game notices
-  - Deep configuration options
-  - Powerful RPC control functions
-  - Ticker notices
-  - Low CPU usage
-  - Analytics support
-  - Revive Token keeping
+
+* Android and iOS support
+* High score keeping
+* In game notices
+* Deep configuration options
+* Powerful RPC control functions
+* Ticker notices
+* Low CPU usage
+* Analytics support
+* Revive Token keeping
 
 ### Building
 
 1. [Download and install Go](https://golang.org/dl/) (latest version should work, but the availability of the legacy `go get` syntax )
 2. [Download and install Git](https://git-scm.com/downloads) (for `go get`)
-3. Set your [GOPATH](https://github.com/golang/go/wiki/SettingGOPATH) environment variable (on Windows, the default is `C:\Users\UsernameHere\go`, while on Linux the default is `/home/usernamehere/go` - only change this if you want to put your work in another directory)
+3. Set your [GOPATH](https://github.com/golang/go/wiki/SettingGOPATH) environment variable (on Windows, the default is `C:\\Users\\UsernameHere\\go`, while on Linux the default is `/home/usernamehere/go` - only change this if you want to put your work in another directory)
 4. Open a terminal/command prompt
 5. Use `cd` ([Windows,](https://www.digitalcitizen.life/command-prompt-how-use-basic-commands) [Linux/macOS](https://www.macworld.com/article/2042378/master-the-command-line-navigating-files-and-folders.html)) to navigate to a directory of choice
-6. Run `go get github.com/RunnersRevival/outrun@self-hostable` and wait until the command line returns
-7. Run `go build github.com/RunnersRevival/outrun` and wait until the build is complete
-8. Run the produced executable (`outrun.exe` on Windows, `outrun` on Linux/macOS)
+6. Run `go build -o outrun.exe` and wait until the exe has been made
+7. Run the produced executable (`outrun.exe` on Windows, `outrun` on Linux/macOS)
 
 #### Modifying an APK to connect to your instance (from Windows)
 
@@ -64,6 +65,7 @@ Functional:
 #### Modifying an IPA to connect to your instance (from Windows)
 
 *Disclaimer: Make sure your server URLs (including the port, information, and asset extensions) are below 26 characters so it can fit within the hex*
+
 1. Install [7-Zip](https://www.7-zip.org/download.html)
 2. Install a hex editor of your choice
 3. Open a Sonic Runners v2.0.3 IPA file with 7-Zip
@@ -83,12 +85,23 @@ Any pull requests deemed code improvements are strongly encouraged. Refactors ma
 ### Credits
 
 Much thanks to:
-  - **YPwn**, whose closest point of online social contact I do not know, for creating and running the Sonic Runners Revival server upon which this project based much of its code upon.
-  - **[@Sazpaimon](https://github.com/Sazpaimon)** for finding the encryption key I so desparately looked for but could not on my own.
-  - **nacabaro** (nacabaro#2138 on Discord) for traffic logging and the discovery of **[DaGuAr](https://www.youtube.com/user/Gorila5)**'s asset archive.
+
+* **YPwn**, whose closest point of online social contact I do not know, for creating and running the Sonic Runners Revival server upon which this project based much of its code upon.
+* [**@Sazpaimon**](https://github.com/Sazpaimon) for finding the encryption key I so desparately looked for but could not on my own.
+* **nacabaro** (nacabaro#2138 on Discord) for traffic logging and the discovery of [**DaGuAr**](https://www.youtube.com/user/Gorila5)'s asset archive.
+* **@RatCatcherVr (DISCORD) Fixed errors for self-hostable branch.**
 
 #### Additional assistance
-  - Story Mode items
-    - lukaafx (Discord @Kalu04#3243)
-    - [TemmieFlakes](https://twitter.com/pictochat3)
-    - SuperSonic893YT
+
+
+
+* Events Config
+
+&#x20;  • RatCatcherVr (DISCORD)
+
+* Story Mode items
+
+  * lukaafx (Discord @Kalu04#3243)
+  * [TemmieFlakes](https://twitter.com/pictochat3)
+  * SuperSonic893YT
+
