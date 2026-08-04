@@ -7,17 +7,13 @@ import (
 	"github.com/jinzhu/now"
 )
 
-func PlayerToLeaderboardEntry(player netobj.Player, mode, lbtype int64) obj.LeaderboardEntry {
+func PlayerToLeaderboardEntry(player netobj.Player, mode int64) obj.LeaderboardEntry {
 	friendID := player.ID
 	name := player.Username
 	url := player.Username + "_findme" // TODO: only used for testing right now
-	grade := int64(1)                  // ONLY FOR TESTING
+	grade := int64(1)                  // TODO: make this specifiable in the future (this is the high score ranking it seems)
 	exposeOnline := int64(0)
 	rankingScore := player.PlayerState.HighScore
-	if lbtype == 8 || lbtype == 9 {
-		// special stage ranking
-		rankingScore = player.EventState.Param
-	}
 	rankChanged := int64(0)
 	isSentEnergy := int64(0)
 	expireTime := now.EndOfWeek().UTC().Unix()

@@ -24,8 +24,6 @@ type PostGameResultsRequest struct {
 	GetChaoEgg    int64 `json:"getChaoEgg"`
 	NumBossAttack int64 `json:"numBossAttack,string"`
 	ReachPoint    int64 `json:"reachPoint,string"`
-	EventID       int64 `json:"eventId,string,omitempty"`
-	EventValue    int64 `json:"eventValue,string,omitempty"`
 }
 
 type QuickActStartRequest struct {
@@ -37,7 +35,6 @@ type QuickActStartRequest struct {
 type ActStartRequest struct {
 	QuickActStartRequest
 	DistanceFriendList []netobj.MileageFriend `json:"distanceFriendList"` // TODO: Discover correct type... This might be list of strings
-	EventID            string                 `json:"eventId,omitempty"`
 }
 
 type MileageRewardRequest struct {

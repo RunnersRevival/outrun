@@ -23,23 +23,14 @@ func IsEventTypeValidForGameVersion(gameVersion string, eventType int64) bool {
 		enums.EventTypeAdvert,        // banner only
 	}
 	if gameVersion[0] == '2' {
-		if gameVersion[2] == '0' {
-			WhitelistedEventTypes = []int64{ // 2.0.x events
-				// the first four types were technically made unused, but they can still be called despite their incompleteness
-				enums.EventTypeAdvert, // banner only
-				enums.EventTypeQuick,  // timed mode stage
-				enums.EventTypeBGM,    // custom BGM during gameplay
-			}
-		} else {
-			WhitelistedEventTypes = []int64{ // 2.x.x events
-				enums.EventTypeSpecialStage,  // event stage, storyline, roulette, and rewards (broken in 2.0.x)
-				enums.EventTypeRaidBoss,      // unique yearly event where one of the deadly six show up (broken in 2.0.x)
-				enums.EventTypeCollectObject, // e.g. Animal Rescue Event
-				enums.EventTypeGacha,         // roulette event
-				enums.EventTypeAdvert,        // banner only
-				enums.EventTypeQuick,         // timed mode stage
-				enums.EventTypeBGM,           // custom BGM during gameplay
-			}
+		WhitelistedEventTypes = []int64{ // 2.x.x events
+			//enums.EventTypeSpecialStage,  // event stage, storyline, roulette, and rewards (broken in 2.0.x)
+			//enums.EventTypeRaidBoss,      // unique yearly event where one of the deadly six show up (broken in 2.0.x)
+			enums.EventTypeCollectObject, // e.g. Animal Rescue Event
+			enums.EventTypeGacha,         // roulette event
+			enums.EventTypeAdvert,        // banner only
+			enums.EventTypeQuick,         // timed mode stage
+			enums.EventTypeBGM,           // custom BGM during gameplay (TODO: Can this do more than just change gameplay music?)
 		}
 	}
 	for _, a := range WhitelistedEventTypes {
@@ -89,43 +80,6 @@ func GetEventList(helper *helper.Helper) {
 	helper.DebugOut("Event list: %v", eventList)
 	response := responses.EventList(baseInfo, eventList)
 	//response.BaseResponse = responses.NewBaseResponseV(baseInfo, request.Version)
-	err = helper.SendResponse(response)
-	if err != nil {
-		helper.InternalErr("Error sending response", err)
-	}
-}
-
-func GetEventReward(helper *helper.Helper) {
-	recv := helper.GetGameRequest()
-	var request requests.GenericEventRequest
-	err := json.Unmarshal(recv, &request)
-	if err != nil {
-		helper.Err("Error unmarshalling", err)
-		return
-	}
-	baseInfo := helper.BaseInfo(emess.OK, status.OK)
-	response := responses.DefaultEventRewardList(baseInfo)
-	err = helper.SendResponse(response)
-	if err != nil {
-		helper.InternalErr("Error sending response", err)
-	}
-}
-
-func GetEventState(helper *helper.Helper) {
-	player, err := helper.GetCallingPlayer()
-	if err != nil {
-		helper.InternalErr("Error getting calling player", err)
-		return
-	}
-	recv := helper.GetGameRequest()
-	var request requests.GenericEventRequest
-	err = json.Unmarshal(recv, &request)
-	if err != nil {
-		helper.Err("Error unmarshalling", err)
-		return
-	}
-	baseInfo := helper.BaseInfo(emess.OK, status.OK)
-	response := responses.EventState(baseInfo, player.EventState)
 	err = helper.SendResponse(response)
 	if err != nil {
 		helper.InternalErr("Error sending response", err)

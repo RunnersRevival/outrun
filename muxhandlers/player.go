@@ -3,17 +3,12 @@ package muxhandlers
 import (
 	"encoding/json"
 	"math/rand"
-	"strconv"
 	"time"
 
 	"github.com/RunnersRevival/outrun/consts"
 	"github.com/RunnersRevival/outrun/db"
 	"github.com/RunnersRevival/outrun/emess"
-	"github.com/RunnersRevival/outrun/enums"
 	"github.com/RunnersRevival/outrun/helper"
-	"github.com/RunnersRevival/outrun/netobj"
-	"github.com/RunnersRevival/outrun/obj"
-	"github.com/RunnersRevival/outrun/obj/constobjs"
 	"github.com/RunnersRevival/outrun/requests"
 	"github.com/RunnersRevival/outrun/responses"
 	"github.com/RunnersRevival/outrun/status"
@@ -65,10 +60,6 @@ func GetPlayerState(helper *helper.Helper) {
 		player.PlayerState.DailyMissionEndTime = now.EndOfDay().UTC().Unix() + 1
 		helper.DebugOut("New daily mission ID: %v", player.PlayerState.DailyMissionID)
 	}
-	if player.PlayerState.NumRings < 0 { // player is in ring debt, set back to 0
-		player.PlayerState.NumRings = 0
-		helper.Warn("Player %s (%s) was in ring debt! Setting back to 0 rings... (ring deduction logic may have malfunctioned, please investigate!)", player.Username, player.ID)
-	}
 	err = db.SavePlayer(player)
 	if err != nil {
 		helper.InternalErr("Error saving player", err)
@@ -87,73 +78,22 @@ func GetCharacterState(helper *helper.Helper) {
 		return
 	}
 	// below is a lazy hack to add event characters to the character state
-	charindex := player.IndexOfChara(enums.CTStrAmitieAmy)
+	/*charindex := player.IndexOfChara(enums.CTStrAmitieAmy)
 	if charindex == -1 {
 		player.CharacterState = append(player.CharacterState, netobj.DefaultRouletteOnlyLockedCharacter(constobjs.CharacterAmitieAmy))
-	}
-	charindex = player.IndexOfChara(enums.CTStrHalloweenShadow)
-	helper.Out("Player ", player.Username, "'s charIndex for Halloween Shadow is", charindex)
+	}*/
+	/*charindex := player.IndexOfChara(enums.CTStrXMasSonic)
 	if charindex == -1 {
-		helper.Out("Player " + player.Username + "'s charIndex was -1")
-		player.CharacterState = append(player.CharacterState, netobj.DefaultRouletteOnlyLockedCharacter(constobjs.CharacterHalloweenShadow))
-		helper.Out("Player " + player.Username + "'s charIndex is now " + strconv.Itoa(player.IndexOfChara(enums.CTStrHalloweenShadow)))
-	}
-	charindex = player.IndexOfChara(enums.CTStrHalloweenRouge)
-	helper.Out("Player ", player.Username, "'s charIndex for Halloween Rouge is", charindex)
-	if charindex == -1 {
-		helper.Out("Player " + player.Username + "'s charIndex was -1")
-		player.CharacterState = append(player.CharacterState, netobj.DefaultRouletteOnlyLockedCharacter(constobjs.CharacterHalloweenRouge))
-		helper.Out("Player ", player.Username, "'s charIndex is now " + strconv.Itoa(player.IndexOfChara(enums.CTStrHalloweenRouge)))
-	}
-	charindex = player.IndexOfChara(enums.CTStrHalloweenOmega)
-	helper.Out("Player " + player.Username + "'s charIndex for Halloween Omega is", charindex)
-	if charindex == -1 {
-		helper.Out("Player " + player.Username + "'s charIndex was -1")
-		player.CharacterState = append(player.CharacterState, netobj.DefaultRouletteOnlyLockedCharacter(constobjs.CharacterHalloweenOmega))
-		helper.Out("Player " + player.Username + "'s charIndex is now " + strconv.Itoa(player.IndexOfChara(enums.CTStrHalloweenOmega)))
-	}
-	charindex = player.IndexOfChara(enums.CTStrGothicAmy)
-	if charindex == -1 {
-		player.CharacterState = append(player.CharacterState, netobj.DefaultSpecialLockedCharacter(constobjs.CharacterGothicAmy))
-	}
-	charindex = player.IndexOfChara(enums.CTStrMarine)
-	if charindex == -1 {
-		//helper.Out("Adding Marine to CharacterState")
-		player.CharacterState = append(player.CharacterState, netobj.DefaultRouletteOnlyLockedCharacter(constobjs.CharacterMarine))
-  }
-  charindex = player.IndexOfChara(enums.CTStrXT)
-  if charindex == -1 {
-    player.CharacterState = append(player.CharacterState, netobj.DefaultRouletteOnlyLockedCharacter(constobjs.CharacterXT))
-  }
-	charindex = player.IndexOfChara(enums.CTStrWhisper)
-	if charindex == -1 {
-		//helper.Out("Adding Whisper to CharacterState")
-		player.CharacterState = append(player.CharacterState, netobj.DefaultRouletteOnlyLockedCharacter(constobjs.CharacterWhisper))
-	}
-	charindex = player.IndexOfChara(enums.CTStrTangle)
-	if charindex == -1 {
-		//helper.Out("Adding Tangle to CharacterState")
-		player.CharacterState = append(player.CharacterState, netobj.DefaultRouletteOnlyLockedCharacter(constobjs.CharacterTangle))
-	}
-	charindex = player.IndexOfChara(enums.CTStrXMasSonic)
-	if charindex == -1 {
-		//helper.Out("Adding Xmas Sonic to CharacterState")
 		player.CharacterState = append(player.CharacterState, netobj.DefaultRouletteOnlyLockedCharacter(constobjs.CharacterXMasSonic))
 	}
 	charindex = player.IndexOfChara(enums.CTStrXMasTails)
 	if charindex == -1 {
-		//helper.Out("Adding Xmas Tails to CharacterState")
 		player.CharacterState = append(player.CharacterState, netobj.DefaultRouletteOnlyLockedCharacter(constobjs.CharacterXMasTails))
 	}
 	charindex = player.IndexOfChara(enums.CTStrXMasKnuckles)
 	if charindex == -1 {
-		//helper.Out("Adding Xmas Knuckles to CharacterState")
 		player.CharacterState = append(player.CharacterState, netobj.DefaultRouletteOnlyLockedCharacter(constobjs.CharacterXMasKnuckles))
-	}
-
-	if strconv.Itoa(enums.CharaTypeXMasSonic) != enums.CTStrXMasSonic {
-		helper.Warn("Enum is wrong! Defined type for Xmas Sonic: %s (int) != %s (str)", strconv.Itoa(enums.CharaTypeXMasSonic), enums.CTStrXMasSonic)
-	}
+	}*/
 	err = db.SavePlayer(player)
 	if err != nil {
 		helper.InternalErr("Error saving player", err)
@@ -168,39 +108,6 @@ func GetChaoState(helper *helper.Helper) {
 	player, err := helper.GetCallingPlayer()
 	if err != nil {
 		helper.InternalErr("Error getting calling player", err)
-		return
-	}
-	chaoindex := player.IndexOfChao(enums.ChaoIDStrPrideChaoL)
-	if chaoindex == -1 {
-		player.ChaoState = append(player.ChaoState, netobj.NewNetChao(obj.NewChao(enums.ChaoIDStrPrideChaoL, 1, 1), int64(enums.ChaoStatusNotOwned), int64(0), int64(enums.ChaoDealingNone), int64(0)))
-	}
-	chaoindex = player.IndexOfChao(enums.ChaoIDStrPrideChaoG)
-	if chaoindex == -1 {
-		player.ChaoState = append(player.ChaoState, netobj.NewNetChao(obj.NewChao(enums.ChaoIDStrPrideChaoG, 1, 1), int64(enums.ChaoStatusNotOwned), int64(0), int64(enums.ChaoDealingNone), int64(0)))
-	}
-	chaoindex = player.IndexOfChao(enums.ChaoIDStrPrideChaoB)
-	if chaoindex == -1 {
-		player.ChaoState = append(player.ChaoState, netobj.NewNetChao(obj.NewChao(enums.ChaoIDStrPrideChaoB, 1, 1), int64(enums.ChaoStatusNotOwned), int64(0), int64(enums.ChaoDealingNone), int64(0)))
-	}
-	chaoindex = player.IndexOfChao(enums.ChaoIDStrPrideChaoT)
-	if chaoindex == -1 {
-		player.ChaoState = append(player.ChaoState, netobj.NewNetChao(obj.NewChao(enums.ChaoIDStrPrideChaoT, 1, 1), int64(enums.ChaoStatusNotOwned), int64(0), int64(enums.ChaoDealingNone), int64(0)))
-	}
-	chaoindex = player.IndexOfChao(enums.ChaoIDStrPrideChaoP)
-	if chaoindex == -1 {
-		player.ChaoState = append(player.ChaoState, netobj.NewNetChao(obj.NewChao(enums.ChaoIDStrPrideChaoP, 1, 1), int64(enums.ChaoStatusNotOwned), int64(0), int64(enums.ChaoDealingNone), int64(0)))
-	}
-	chaoindex = player.IndexOfChao(enums.ChaoIDStrPrideChaoA)
-	if chaoindex == -1 {
-		player.ChaoState = append(player.ChaoState, netobj.NewNetChao(obj.NewChao(enums.ChaoIDStrPrideChaoA, 1, 1), int64(enums.ChaoStatusNotOwned), int64(0), int64(enums.ChaoDealingNone), int64(0)))
-	}
-	chaoindex = player.IndexOfChao(enums.ChaoIDStrPrideChaoNB)
-	if chaoindex == -1 {
-		player.ChaoState = append(player.ChaoState, netobj.NewNetChao(obj.NewChao(enums.ChaoIDStrPrideChaoNB, 1, 1), int64(enums.ChaoStatusNotOwned), int64(0), int64(enums.ChaoDealingNone), int64(0)))
-	}
-	err = db.SavePlayer(player)
-	if err != nil {
-		helper.InternalErr("Error saving player", err)
 		return
 	}
 	baseInfo := helper.BaseInfo(emess.OK, status.OK)

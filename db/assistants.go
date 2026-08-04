@@ -25,7 +25,7 @@ const (
 	SessionIDSchema = "OUTRUN_%s"
 )
 
-func NewAccountWithID(uid string, resetcount int64) netobj.Player {
+func NewAccountWithID(uid string) netobj.Player {
 	randChar := func(charset string, length int64) string {
 		runes := []rune(charset)
 		final := make([]rune, 10)
@@ -72,10 +72,6 @@ func NewAccountWithID(uid string, resetcount int64) netobj.Player {
 	messages := []obj.Message{}
 	operatorMessages := []obj.OperatorMessage{}
 	loginBonusState := netobj.DefaultLoginBonusState(0)
-	eventState := netobj.DefaultEventState()
-	battleState := netobj.DefaultBattleState()
-	disallowInactivePurge := false
-	lastLoginPlatformID := int64(0)
 	return netobj.NewPlayer(
 		uid,
 		username,
@@ -97,12 +93,6 @@ func NewAccountWithID(uid string, resetcount int64) netobj.Player {
 		messages,
 		operatorMessages,
 		loginBonusState,
-		false,
-		eventState,
-		resetcount,
-		battleState,
-		disallowInactivePurge,
-		lastLoginPlatformID,
 	)
 }
 
@@ -116,7 +106,7 @@ func NewAccount() netobj.Player {
 			newID += strconv.Itoa(rand.Intn(10))
 		}
 	}
-	return NewAccountWithID(newID, 0)
+	return NewAccountWithID(newID)
 }
 
 func SavePlayer(player netobj.Player) error {
@@ -139,14 +129,6 @@ func GetPlayer(uid string) (netobj.Player, error) {
 		return constnetobjs.BlankPlayer, err
 	}
 	return player, nil
-}
-
-func CheckPlayerExists(uid string) bool {
-	_, err := dbaccess.Get(consts.DBBucketPlayers, uid)
-	if err != nil {
-		return false
-	}
-	return true
 }
 
 func DeletePlayer(uid string) error {
@@ -224,91 +206,4 @@ func PurgeAllExpiredSessionIDs() {
 	for _, key := range keysToPurge {
 		PurgeSessionID(string(key))
 	}
-}
-
-func SaveTransferCredentials(transferCreds netobj.TransferCredentials) error {
-	j, err := json.Marshal(transferCreds)
-	if err != nil {
-		return err
-	}
-	err = dbaccess.Set(consts.DBBucketTransferCreds, transferCreds.TransferID, j)
-	return err
-}
-
-func GetTransferCredentials(tid string) (netobj.TransferCredentials, error) {
-	var transferCreds netobj.TransferCredentials
-	trCredsData, err := dbaccess.Get(consts.DBBucketTransferCreds, tid)
-	if err != nil {
-		return netobj.DefaultTransferCredentials(), err
-	}
-	err = json.Unmarshal(trCredsData, &transferCreds)
-	if err != nil {
-		return netobj.DefaultTransferCredentials(), err
-	}
-	return transferCreds, nil
-}
-
-func DeleteTransferCredentials(tid string) error {
-	err := dbaccess.Delete(consts.DBBucketTransferCreds, tid)
-	return err
-}
-
-func BattleGetPlayer(uid string) (netobj.Player, error) {
-	var player netobj.Player
-	playerData, err := dbaccess.Get(consts.BattleDBBucketWaiting, uid)
-	if err != nil {
-		return constnetobjs.BlankPlayer, err
-	}
-	err = json.Unmarshal(playerData, &player)
-	if err != nil {
-		return constnetobjs.BlankPlayer, err
-	}
-	return player, nil
-}
-
-func BattleGetMatchedPoolPlayer(uid string) (netobj.Player, error) {
-	var player netobj.Player
-	playerData, err := dbaccess.Get(consts.BattleDBBucketMatched, uid)
-	if err != nil {
-		return constnetobjs.BlankPlayer, err
-	}
-	err = json.Unmarshal(playerData, &player)
-	if err != nil {
-		return constnetobjs.BlankPlayer, err
-	}
-	return player, nil
-}
-
-func BattleSaveWaitingPlayer(player netobj.Player) error {
-	j, err := json.Marshal(player)
-	if err != nil {
-		return err
-	}
-	err = dbaccess.BattleDBSet(consts.BattleDBBucketWaiting, player.ID, j)
-	return err
-}
-
-func BattleSaveMatchedPlayer(player netobj.Player) error {
-	j, err := json.Marshal(player)
-	if err != nil {
-		return err
-	}
-	err = dbaccess.BattleDBSet(consts.BattleDBBucketMatched, player.ID, j)
-	return err
-}
-
-func BattleDeleteWaitingPlayer(uid string) error {
-	err := dbaccess.BattleDBDelete(consts.BattleDBBucketWaiting, uid)
-	return err
-}
-
-func BattleDeleteMatchedPlayer(uid string) error {
-	err := dbaccess.BattleDBDelete(consts.BattleDBBucketMatched, uid)
-	return err
-}
-
-func BattleDeletePlayer(uid string) error {
-	err := dbaccess.BattleDBDelete(consts.BattleDBBucketWaiting, uid)
-	err = dbaccess.BattleDBDelete(consts.BattleDBBucketMatched, uid)
-	return err
 }

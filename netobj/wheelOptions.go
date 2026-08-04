@@ -113,8 +113,8 @@ func DefaultWheelOptions(numRouletteTicket, rouletteCountInPeriod, rouletteRank,
 	}
 
 	//itemWon := int64(0)
-	itemWon := int64(rand.Intn(len(items)))         //TODO: adjust this to accurately represent item weights
-	nextFreeSpin := now.EndOfDay().UTC().Unix() + 1 // midnight
+	itemWon := int64(rand.Intn(len(items)))   //TODO: adjust this to accurately represent item weights
+	nextFreeSpin := now.EndOfDay().Unix() + 1 // midnight
 	spinCost := int64(15)
 	//rouletteRank := int64(enums.WheelRankNormal)
 	//numRouletteToken := playerState.NumRouletteTicket

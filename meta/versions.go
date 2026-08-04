@@ -2,5 +2,5 @@ package meta
 
 const (
 	// Version format: <CodebaseVer.>.<MajorFunc.>.<Bugfix>
-	Version = "1.1.1r"
+	Version = "1.0.1r"
 )

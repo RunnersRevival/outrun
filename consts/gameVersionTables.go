@@ -1,6 +1,5 @@
 package consts
 
-// lookup table for asset versions; currently unused
 var DataVersionForGameVersion = map[string]string{
 	"0.0.5": "001",
 	"1.0.0": "025", // ACTUAL ASSET VERSION UNKNOWN!
@@ -15,10 +14,4 @@ var DataVersionForGameVersion = map[string]string{
 	"2.0.0": "043",
 	"2.0.1": "047",
 	"2.0.3": "050",
-	"2.1.0": "051",
-	"2.1.1": "052",
-	"2.2.0": "053",
-	"2.2.1": "054",
-	"2.2.2": "054",
-	"2.2.3": "054",
 }

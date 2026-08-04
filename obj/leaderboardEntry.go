@@ -10,9 +10,9 @@ type LeaderboardEntry struct {
 	Name              string `json:"name"`
 	URL               string `json:"url"`
 	Grade             int64  `json:"grade"`
-	ExposeOnline      int64  `json:"exposeOnline"` // internal use on the OG server - game does not reference this field
+	ExposeOnline      int64  `json:"exposeOnline"` // TODO: remove this, apparently it's not used
 	RankingScore      int64  `json:"rankingScore"`
-	RankChanged       int64  `json:"rankChanged"` // internal use on the OG server - game does not reference this field
+	RankChanged       int64  `json:"rankChanged"` // TODO: potentially remove this, doesn't seem to be used
 	IsSentEnergy      int64  `json:"energyFlg"`
 	ExpireTime        int64  `json:"expireTime"` // TODO: doesn't seem to be used
 	NumRank           int64  `json:"numRank"`    // left adjusted with '0's to match length 3; unknown of use, called internally 'mapRank'
@@ -69,7 +69,7 @@ func DefaultLeaderboardEntry(uid string) LeaderboardEntry {
 		0,
 		0,
 		0,
-		time.Now().UTC().Unix(), // this should be player.LastLogin!
+		time.Now().Unix(), // this should be player.LastLogin!
 		0,
 		0,
 		0,

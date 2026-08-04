@@ -14,7 +14,7 @@ func CleanBytes(b []byte) []byte {
 	return []byte(re.ReplaceAllLiteralString(string(b), ""))
 }
 
-func GetReceivedMessage(r *http.Request) ([]byte, error) {
+func GetReceivedMessage(r *http.Request) []byte {
 	err := r.ParseForm()
 	if err != nil {
 		log.Println("[ERR] Error in parsing form: " + err.Error())
@@ -23,21 +23,11 @@ func GetReceivedMessage(r *http.Request) ([]byte, error) {
 	iv := r.Form.Get("key")
 	secure := r.Form.Get("secure")
 	if secure != "1" {
-		return []byte(param), nil // message is not encrypted!
+		return []byte(param) // message is not encrypted!
 	}
-	defer func() {
-		if rErr := recover(); rErr != nil {
-			log.Println("[ERR] Panic during decryption", rErr)
-		}
-	}()
-
 	EncryptionIv = []byte(iv)
-	paramUnB64, err := B64Decode(param)
-	if err != nil {
-		log.Println("[ERR] Couldn't decode param: " + err.Error())
-		return []byte(param), err
-	}
+	paramUnB64 := B64Decode(param)
 	decrypted := Decrypt(paramUnB64, EncryptionKey, EncryptionIv)
 	decrypted = CleanBytes(decrypted)
-	return decrypted, nil
+	return decrypted
 }

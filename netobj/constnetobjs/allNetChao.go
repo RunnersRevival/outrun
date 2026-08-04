@@ -45,33 +45,6 @@ func DefaultChaoState() []netobj.Chao {
 	return chaos
 }
 
-func UnlockedChaoState() []netobj.Chao {
-	chaos := []netobj.Chao{}
-	chaoStatus := int64(enums.ChaoStatusOwned)
-	chaoLevel := int64(0)
-	chaoDealing := int64(enums.ChaoDealingNone) // TODO: discover use
-	acquired := int64(1)
-	for _, chaoID := range ChaoIDs {
-		id := chaoID
-		rarity, _ := strconv.Atoi(string(id[2])) // numerical rarity (third digit)
-		hidden := int64(0)                       // TODO: discover what this is used for (see obj/chao.go)
-		chao := obj.NewChao(
-			id,
-			int64(rarity),
-			hidden,
-		)
-		netchao := netobj.NewNetChao(
-			chao,
-			chaoStatus,
-			chaoLevel,
-			chaoDealing,
-			acquired,
-		)
-		chaos = append(chaos, netchao)
-	}
-	return chaos
-}
-
 func GetAllNetChao() map[string]netobj.Chao {
 	// TODO: remove. Should not be used anymore.
 	chaos := make(map[string]netobj.Chao)

@@ -23,7 +23,7 @@ func DefaultOperatorMessage() OperatorMessage {
 		0,
 		0,
 	)
-	expireTime := time.Now().UTC().Unix() + 12600 // three and a half hours from now
+	expireTime := time.Now().Unix() + 12600 // three and a half hours from now
 	return OperatorMessage{
 		id,
 		content,
@@ -33,7 +33,7 @@ func DefaultOperatorMessage() OperatorMessage {
 }
 
 func NewOperatorMessage(id int64, content string, item MessageItem, expiresAfter int64) OperatorMessage {
-	expireTime := time.Now().UTC().Unix() + expiresAfter
+	expireTime := time.Now().Unix() + expiresAfter
 	return OperatorMessage{
 		strconv.Itoa(int(id)),
 		content,

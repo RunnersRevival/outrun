@@ -10,7 +10,7 @@ type Toolbox struct {
 }
 
 func (t *Toolbox) RegisterPlayerWithID(uid string, reply *ToolboxReply) error {
-	player := db.NewAccountWithID(uid, 0)
+	player := db.NewAccountWithID(uid)
 	err := db.SavePlayer(player)
 	if err != nil {
 		reply.Status = StatusOtherError
@@ -41,13 +41,6 @@ type ToolboxValueReply struct {
 	Result interface{}
 }
 
-type ToolboxPlayerCountReply struct {
-	Status               uint
-	ActiveCount          int64
-	TotalRegisteredCount int64
-	AdditionalInfo       string
-}
-
 type ChangeValueArgs struct {
 	UID   string
 	Value interface{}
@@ -64,21 +57,4 @@ type SendOperatorMessageArgs struct {
 	MessageContents string
 	Item            obj.MessageItem
 	ExpiresAfter    int64
-}
-
-type SendOperatorMessageToSomeArgs struct {
-	UIDs            string
-	MessageContents string
-	Item            obj.MessageItem
-	ExpiresAfter    int64
-}
-
-type ChangeCharacter struct {
-	ID            string `json:"characterId"`
-	Cost          int64  `json:"numRings"`         // interestingly, is used for both buying the character and for levelling up...
-	NumRedRings   int64  `json:"numRedRings"`      // ?
-	Price         int64  `json:"priceNumRings"`    // used to limit smash, as far as I can tell?
-	PriceRedRings int64  `json:"priceNumRedRings"` // ?
-	LockCondition int64
-	UIDs          string
 }

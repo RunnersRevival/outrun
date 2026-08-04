@@ -20,8 +20,8 @@ func (b BaseInfo) SetErrorMessage(message string) {
 
 func NewBaseInfo(em string, statusCode int64) BaseInfo {
 	// seq is a default 0 for now, since it does not impact gameplay thus far
-	closeTime := now.EndOfDay().UTC().Unix()
-	serverTime := time.Now().UTC().Unix()
+	closeTime := now.EndOfDay().Unix()
+	serverTime := time.Now().Unix()
 	seq := int64(0)
 	return BaseInfo{
 		ErrorMessage(em),

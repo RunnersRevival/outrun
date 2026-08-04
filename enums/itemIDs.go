@@ -97,15 +97,9 @@ const (
 )
 
 const (
-	ItemIDRaidbossEnergy = 940000
-	ItemIDRaidbossRing   = 960000
+	ItemIDStrRedRing = "900000"
+	ItemIDStrRing    = "910000"
 )
-
-const (
-	ItemIDStrRedRing        = "900000"
-	ItemIDStrRing           = "910000"
-)
-
 const (
 	ItemIDStrItemRouletteTicket    = "240000"
 	ItemIDStrPremiumRouletteTicket = "230000"

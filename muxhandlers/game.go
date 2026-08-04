@@ -3,11 +3,10 @@ package muxhandlers
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"math/rand"
-	"os"
 	"strconv"
 	"time"
+
 	"github.com/RunnersRevival/outrun/analytics"
 	"github.com/RunnersRevival/outrun/analytics/factors"
 	"github.com/RunnersRevival/outrun/config"
@@ -27,12 +26,8 @@ import (
 	"github.com/RunnersRevival/outrun/requests"
 	"github.com/RunnersRevival/outrun/responses"
 	"github.com/RunnersRevival/outrun/status"
-	"github.com/RunnersRevival/outrun/logic/battle"
 	"github.com/jinzhu/now"
 )
-
-const GAME_RESULT_LOG_DIRECTORY = "logging/story_game_results/"
-const QUICK_GAME_RESULT_LOG_DIRECTORY = "logging/timed_game_results/"
 
 func GetDailyChallengeData(helper *helper.Helper) {
 	player, err := helper.GetCallingPlayer()
@@ -167,7 +162,6 @@ func QuickActStart(helper *helper.Helper) {
 		helper.InternalErr("Error sending response", err)
 		return
 	}
-	player.InRun = true
 	err = db.SavePlayer(player)
 	if err != nil {
 		helper.InternalErr("Error saving player", err)
@@ -258,7 +252,6 @@ func ActStart(helper *helper.Helper) {
 		helper.InternalErr("Error sending response", err)
 		return
 	}
-	player.InRun = true
 	err = db.SavePlayer(player)
 	if err != nil {
 		helper.InternalErr("Error saving player", err)
@@ -276,14 +269,7 @@ func ActRetry(helper *helper.Helper) {
 		helper.InternalErr("Error getting calling player", err)
 		return
 	}
-
-	if !player.InRun {
-		helper.Out("Player is not in a run!")
-		helper.InvalidRequest()
-		return
-	}
-
-	redRingContinuePrice := 3 // TODO: move this to consts
+	redRingContinuePrice := 3
 	// TODO: Add campaign support
 	responseStatus := status.OK
 	if player.PlayerState.NumRedRings >= int64(redRingContinuePrice) { //does the player actually have enough red rings?
@@ -325,14 +311,6 @@ func QuickPostGameResults(helper *helper.Helper) {
 		return
 	}
 
-	if !player.InRun {
-		helper.Out("Player is not in a run!")
-		helper.InvalidRequest()
-		return
-	}
-
-	player.InRun = false
-
 	//update energy counter
 	for time.Now().UTC().Unix() >= player.PlayerState.EnergyRenewsAt && player.PlayerState.Energy < player.PlayerVarious.EnergyRecoveryMax {
 		player.PlayerState.Energy++
@@ -360,84 +338,16 @@ func QuickPostGameResults(helper *helper.Helper) {
 			subC,
 		}
 	}
-	mainCIndex := player.IndexOfChara(mainC.ID) // TODO: check if -1
-	subCIndex := -1
-	if hasSubCharacter {
-		subCIndex = player.IndexOfChara(subC.ID) // TODO: check if -1
-	}
 	if request.Closed == 0 { // If the game wasn't exited out of
-		var unsignedScore int64 = int64(uint32(request.Score))
-		if unsignedScore > request.Distance*45000 && gameconf.CFile.EnableVerification {
-			// highly experimental
-			platformName := "Unknown"
-			if player.LastLoginPlatformID == 1 {
-				platformName = "iOS"
-			}
-			if player.LastLoginPlatformID == 2 {
-				platformName = "Android"
-			}
-			timeStr := strconv.Itoa(int(time.Now().Unix()))
-			os.MkdirAll(GAME_RESULT_LOG_DIRECTORY, 0644)
-			deets := []byte(fmt.Sprintf("%s (%s)\r\nVersion: %s (%s)\r\nScore: %v\r\nRings: %v (%v lost), Red Rings: %v\r\nDistance: %v\r\nAnimals: %v\r\nGame-reported cheat result: %s", player.Username, player.ID, request.Version, platformName, request.Score, request.Rings, request.FailureRings, request.RedRings, request.Distance, request.Animals, request.CheatResult))
-			path := GAME_RESULT_LOG_DIRECTORY + player.ID + "_" + timeStr + "_quick.txt"
-			err := ioutil.WriteFile(path, deets, 0644)
-			if err != nil {
-				helper.InternalErr("Unable to log run", err)
-			}
-
-			if gameconf.CFile.PenalizeUnverifiables {
-				request.Rings = 0
-				request.FailureRings = 0
-				request.RedRings = 0
-				request.Animals = 0
-				request.Distance = 0
-				request.Score = 0
-				request.DailyChallengeValue = 0
-				request.DailyChallengeComplete = 0
-			}
-		}
-		var finalRingCount int64 = player.PlayerState.NumRings + request.Rings
-		const maxRingValue = 2147483647 // int32 maximum value
-		if finalRingCount >= maxRingValue {
-			// Find how many Rings it will take to hit max, and only add those to prevent overflows
-			var ringsOverMax int64 = finalRingCount - maxRingValue
-			var ringsToSafelyAdd int64 = request.Rings - ringsOverMax
-			if player.PlayerState.NumRings == maxRingValue {
-				helper.Out("Player has the maximum amount of Rings; cannot add any more!")
-			} else {
-				helper.Out("Player will reach maximum Ring count; only adding enough Rings to hit max!")
-				player.PlayerState.NumRings += ringsToSafelyAdd
-			}
-		} else {
-			player.PlayerState.NumRings += request.Rings
-		}
+		player.PlayerState.NumRings += request.Rings
 		player.PlayerState.NumRedRings += request.RedRings
-		//player.PlayerState.NumRouletteTicket += request.RedRings // TODO: URGENT! Remove as soon as possible!
+		player.PlayerState.NumRouletteTicket += request.RedRings // TODO: URGENT! Remove as soon as possible!
 		player.PlayerState.Animals += request.Animals
 		player.OptionUserResult.NumTakeAllRings += request.Rings
 		player.OptionUserResult.NumTakeAllRedRings += request.RedRings
 		playerTimedHighScore := player.PlayerState.TimedHighScore
 		if request.Score > playerTimedHighScore {
 			player.PlayerState.TimedHighScore = request.Score
-		}
-		if player.BattleState.ScoreRecordedToday {
-			helper.DebugOut("Daily battle high score already set!")
-			dailyBattleHighScore := player.BattleState.DailyBattleHighScore
-			if request.Score > dailyBattleHighScore {
-				player.BattleState.DailyBattleHighScore = request.Score
-				helper.DebugOut("New daily battle high score!")
-			}
-		} else {
-			player.BattleState.PrevDailyBattleHighScore = player.BattleState.DailyBattleHighScore
-			player.BattleState.DailyBattleHighScore = request.Score
-			helper.DebugOut("Daily battle high score has been set!")
-			player.BattleState.ScoreRecordedToday = true
-			player.BattleState = battle.DrawBattleRival(player, 100)
-		}
-		if player.BattleState.MatchedUpWithRival {
-			helper.DebugOut("Matched up with rival!")
-		} else {
-			helper.DebugOut("No rival was found!")
 		}
 		helper.DebugOut("request.DailyChallengeValue: %v", request.DailyChallengeValue)
 		helper.DebugOut("request.DailyChallengeComplete: %v", request.DailyChallengeComplete)
@@ -500,21 +410,9 @@ func QuickPostGameResults(helper *helper.Helper) {
 		}
 
 		// increase character(s)'s experience
-		expIncrease := int64(0)
-		if gameconf.CFile.UseRingsAsExp {
-			expIncrease = request.Rings + request.FailureRings // all rings collected
-		} else {
-			expIncrease = request.Score / 5000
-		}
-		
+		expIncrease := request.Rings + request.FailureRings // all rings collected
 		mainAbilityIndex := 1
-		//tempAbilityIndex := 0
-		//tempAbilityIndex = mainAbilityIndex
 		mainAbilitySum := sum(mainC.AbilityLevel)
-		AbilityLevelUpIDMain := make([]int64, 0) // Does not need to be fixed
-		AbilityLevelUpIDSub := make([]int64, 0) // Does not need to be fixed
-		AbilityLevelUpXPValueMain := make([]int64, 0) // Does not need to be fixed, but needs same size as AbilityLevelUp
-		AbilityLevelUpXPValueSub := make([]int64, 0) // Does not need to be fixed, but needs same size as AbilityLevelUp
 		if mainAbilitySum < 100 {
 			for mainAbilityIndex == 1 || mainC.AbilityLevel[mainAbilityIndex] >= 10 { // unused ability is at index 1
 				mainAbilityIndex = rand.Intn(len(mainC.AbilityLevel))
@@ -522,9 +420,6 @@ func QuickPostGameResults(helper *helper.Helper) {
 		} else {
 			helper.DebugOut("Main character seems to be maxed out on abilities!")
 		}
-		// for i := range AbilityLevelUpIDMain {
-		// 	AbilityLevelUpIDMain[i] = 120000 // Item ID sprite
-		// }
 		subAbilityIndex := 1
 		subAbilitySum := mainAbilitySum
 		if hasSubCharacter {
@@ -557,12 +452,9 @@ func QuickPostGameResults(helper *helper.Helper) {
 				if playCharacters[0].Level < 100 {
 					playCharacters[0].Level++                                               // increase level
 					playCharacters[0].AbilityLevel[mainAbilityIndex]++                      // increase ability level
-					AbilityLevelUpXPValueMain = append(AbilityLevelUpXPValueMain, int64(playCharacters[0].Cost))
-					AbilityLevelUpIDMain = append(AbilityLevelUpIDMain, 120000 + int64(mainAbilityIndex))
 					playCharacters[0].Exp -= playCharacters[0].Cost                         // remove cost from exp
 					playCharacters[0].Cost += consts.UpgradeIncreases[playCharacters[0].ID] // increase cost
 					mainAbilitySum = sum(playCharacters[0].AbilityLevel)
-					mainAbilityIndex = 1
 					if mainAbilitySum < 100 {
 						for mainAbilityIndex == 1 || playCharacters[0].AbilityLevel[mainAbilityIndex] >= 10 { // reroll ability index
 							mainAbilityIndex = rand.Intn(len(playCharacters[0].AbilityLevel))
@@ -573,11 +465,6 @@ func QuickPostGameResults(helper *helper.Helper) {
 					playCharacters[0].Exp -= playCharacters[0].Cost
 				}
 			}
-			playCharacters[0].AbilityLevelUp = AbilityLevelUpIDMain         // array of abilities to level up
-			playCharacters[0].AbilityLevelUpExp = AbilityLevelUpXPValueMain //  array of XP Values in the level up screeen, should always be character.Cost
-		}
-		if playCharacters[0].Star >= int64(11) { // Somehow, someone actually got Limit Smash 13, let's reset it back to 10
-			playCharacters[0].Star = int64(10)
 		}
 		if hasSubCharacter {
 			if playCharacters[1].Level < 100 {
@@ -587,12 +474,9 @@ func QuickPostGameResults(helper *helper.Helper) {
 					if playCharacters[1].Level < 100 {
 						playCharacters[1].Level++                                               // increase level
 						playCharacters[1].AbilityLevel[subAbilityIndex]++                       // increase ability level
-						AbilityLevelUpXPValueSub = append(AbilityLevelUpXPValueSub, int64(playCharacters[1].Cost))
-						AbilityLevelUpIDSub = append(AbilityLevelUpIDSub, 120000 + int64(subAbilityIndex))
 						playCharacters[1].Exp -= playCharacters[1].Cost                         // remove cost from exp
 						playCharacters[1].Cost += consts.UpgradeIncreases[playCharacters[1].ID] // increase cost
 						subAbilitySum = sum(playCharacters[1].AbilityLevel)
-						subAbilityIndex = 1
 						if subAbilitySum < 100 {
 							for subAbilityIndex == 1 || playCharacters[1].AbilityLevel[subAbilityIndex] >= 10 { // reroll ability index
 								subAbilityIndex = rand.Intn(len(playCharacters[1].AbilityLevel))
@@ -603,41 +487,8 @@ func QuickPostGameResults(helper *helper.Helper) {
 						playCharacters[1].Exp -= playCharacters[1].Cost
 					}
 				}
-				playCharacters[1].AbilityLevelUp = AbilityLevelUpIDSub         // array of abilities to level up
-				playCharacters[1].AbilityLevelUpExp = AbilityLevelUpXPValueSub //  array of XP Values in the level up screeen, should always be character.Cost
-			}
-			if playCharacters[1].Star >= int64(11) {
-				playCharacters[1].Star = int64(10)
 			}
 		}
-		player.PlayerState.MainCharaLevel = playCharacters[0].Level
-		hasMainChao := player.PlayerState.MainChaoID != "none"
-		hasSubChao := player.PlayerState.SubChaoID != "none"
-		var subCh netobj.Chao
-		if hasMainChao{
-			mainCh, err := player.GetMainChao()
-			if err != nil {
-				helper.InternalErr("Error getting main chao", err)
-				return
-			}
-			playChao := []netobj.Chao{ // assume only main character active right now
-				mainCh,
-			}
-			player.PlayerState.MainChaoLevel = playChao[0].Level
-			if hasSubChao {
-				subCh, err = player.GetSubChao()
-				if err != nil {
-					helper.InternalErr("Error getting sub chao", err)
-					return
-				}
-				playChao = []netobj.Chao{ // add sub character to playCharacters
-					mainCh,
-					subCh,
-				}
-				player.PlayerState.SubChaoLevel = playChao[1].Level
-			}
-		}		
-
 
 		helper.DebugOut("Old mainC Exp: %v / %v", mainC.Exp, mainC.Cost)
 		helper.DebugOut("Old mainC Level: %v", mainC.Level)
@@ -647,11 +498,16 @@ func QuickPostGameResults(helper *helper.Helper) {
 		}
 		helper.DebugOut("New mainC Exp: %v / %v", playCharacters[0].Exp, playCharacters[0].Cost)
 		helper.DebugOut("New mainC Level: %v", playCharacters[0].Level)
-		helper.DebugOut("New mainC Level: %v", playCharacters[0].AbilityLevelUp)
 		if hasSubCharacter {
 			helper.DebugOut("New subC Exp: %v / %v", playCharacters[1].Exp, playCharacters[1].Cost)
 			helper.DebugOut("New subC Level: %v", playCharacters[1].Level)
 		}
+	}
+
+	mainCIndex := player.IndexOfChara(mainC.ID) // TODO: check if -1
+	subCIndex := -1
+	if hasSubCharacter {
+		subCIndex = player.IndexOfChara(subC.ID) // TODO: check if -1
 	}
 
 	baseInfo := helper.BaseInfo(emess.OK, status.OK)
@@ -698,14 +554,6 @@ func PostGameResults(helper *helper.Helper) {
 		return
 	}
 
-	if !player.InRun {
-		helper.Out("Player is not in a run!")
-		helper.InvalidRequest()
-		return
-	}
-
-	player.InRun = false
-
 	//update energy counter
 	for time.Now().UTC().Unix() >= player.PlayerState.EnergyRenewsAt && player.PlayerState.Energy < player.PlayerVarious.EnergyRecoveryMax {
 		player.PlayerState.Energy++
@@ -740,67 +588,20 @@ func PostGameResults(helper *helper.Helper) {
 	helper.DebugOut("Point: %v", player.MileageMapState.Point)
 	helper.DebugOut("request.Score: %v", request.Score)
 
-	incentives := constobjs.GetMileageIncentives(player.MileageMapState.Episode, player.MileageMapState.Chapter, request.ReachPoint) // Game wants incentives in _current_ episode-chapter
-	// TODO: this above causes problems! calculate based on current _point_!
+	incentives := constobjs.GetMileageIncentives(player.MileageMapState.Episode, player.MileageMapState.Chapter) // Game wants incentives in _current_ episode-chapter
 	var oldRewardEpisode, newRewardEpisode int64
 	var oldRewardChapter, newRewardChapter int64
 	var oldRewardPoint, newRewardPoint int64
 
 	if request.Closed == 0 { // If the game wasn't exited out of
-		var unsignedScore int64 = int64(uint32(request.Score))
-		if unsignedScore > request.Distance*45000 && gameconf.CFile.EnableVerification {
-			// highly experimental
-			platformName := "Unknown"
-			if player.LastLoginPlatformID == 1 {
-				platformName = "iOS"
-			}
-			if player.LastLoginPlatformID == 2 {
-				platformName = "Android"
-			}
-			timeStr := strconv.Itoa(int(time.Now().Unix()))
-			os.MkdirAll(GAME_RESULT_LOG_DIRECTORY, 0644)
-			deets := []byte(fmt.Sprintf("%s (%s)\r\nVersion: %s (%s)\r\nScore: %v\r\nRings: %v (%v lost), Red Rings: %v\r\nDistance: %v\r\nAnimals: %v\r\nGame-reported cheat result: %s", player.Username, player.ID, request.Version, platformName, request.Score, request.Rings, request.FailureRings, request.RedRings, request.Distance, request.Animals, request.CheatResult))
-			path := GAME_RESULT_LOG_DIRECTORY + player.ID + "_" + timeStr + ".txt"
-			err := ioutil.WriteFile(path, deets, 0644)
-			if err != nil {
-				helper.InternalErr("Unable to log run", err)
-			}
-
-			if gameconf.CFile.PenalizeUnverifiables {
-				request.Rings = 0
-				request.FailureRings = 0
-				request.RedRings = 0
-				request.Animals = 0
-				request.Distance = 0
-				request.Score = 0
-				request.DailyChallengeValue = 0
-				request.DailyChallengeComplete = 0
-				request.ReachPoint = player.MileageMapState.Point
-			}
-		}
 		oldRewardEpisode = player.MileageMapState.Episode
 		oldRewardChapter = player.MileageMapState.Chapter
 		oldRewardPoint = player.MileageMapState.Point
-		var finalRingCount int64 = player.PlayerState.NumRings + request.Rings
-		const maxRingValue = 2147483647 // int32 maximum value
-		if finalRingCount >= maxRingValue {
-			// Find how many Rings it will take to hit max, and only add those to prevent overflows
-			var ringsOverMax int64 = finalRingCount - maxRingValue
-			var ringsToSafelyAdd int64 = request.Rings - ringsOverMax
-			if player.PlayerState.NumRings == maxRingValue {
-				helper.Out("Player has the maximum amount of Rings; cannot add any more!")
-			} else {
-				helper.Out("Player will reach maximum Ring count; only adding enough Rings to hit max!")
-				player.PlayerState.NumRings += ringsToSafelyAdd
-			}
-		} else {
-			player.PlayerState.NumRings += request.Rings
-		}
+		player.PlayerState.NumRings += request.Rings
 		player.PlayerState.NumRedRings += request.RedRings
-		//player.PlayerState.NumRouletteTicket += request.RedRings // TODO: URGENT! Remove as soon as possible!
+		player.PlayerState.NumRouletteTicket += request.RedRings // TODO: URGENT! Remove as soon as possible!
 		player.PlayerState.Animals += request.Animals
 		player.OptionUserResult.NumTakeAllRings += request.Rings
-		player.OptionUserResult.NumTakeAllRings += request.FailureRings
 		player.OptionUserResult.NumTakeAllRedRings += request.RedRings
 		playerHighScore := player.PlayerState.HighScore
 		if request.Score > playerHighScore {
@@ -871,23 +672,9 @@ func PostGameResults(helper *helper.Helper) {
 		}
 
 		// increase character(s)'s experience
-		expIncrease := int64(0)
-		if gameconf.CFile.UseRingsAsExp {
-			expIncrease = request.Rings + request.FailureRings // all rings collected
-		} else {
-			expIncrease = request.Score / 5000
-			if request.BossDestroyed != int64(0) {
-				// TODO: check to see if this is right! we might need to do additional checks here to make sure the game actually wants to move onto the next stage, since if it's on the same mileage point assume the boss isn't defeated and set XP to 0
-				expIncrease = 2000
-			}
-		}
-
+		expIncrease := request.Rings + request.FailureRings // all rings collected
 		mainAbilityIndex := 1
 		mainAbilitySum := sum(mainC.AbilityLevel)
-		AbilityLevelUpIDMain := make([]int64, 0) // Does not need to be fixed
-		AbilityLevelUpIDSub := make([]int64, 0) // Does not need to be fixed
-		AbilityLevelUpXPValueMain := make([]int64, 0) // Does not need to be fixed, but needs same size as AbilityLevelUp
-		AbilityLevelUpXPValueSub := make([]int64, 0) // Does not need to be fixed, but needs same size as AbilityLevelUp
 		if mainAbilitySum < 100 {
 			for mainAbilityIndex == 1 || mainC.AbilityLevel[mainAbilityIndex] >= 10 { // unused ability is at index 1
 				mainAbilityIndex = rand.Intn(len(mainC.AbilityLevel))
@@ -927,12 +714,9 @@ func PostGameResults(helper *helper.Helper) {
 				if playCharacters[0].Level < 100 {
 					playCharacters[0].Level++                                               // increase level
 					playCharacters[0].AbilityLevel[mainAbilityIndex]++                      // increase ability level
-					AbilityLevelUpXPValueMain = append(AbilityLevelUpXPValueMain, int64(playCharacters[0].Cost))
-					AbilityLevelUpIDMain = append(AbilityLevelUpIDMain, 120000 + int64(mainAbilityIndex))
 					playCharacters[0].Exp -= playCharacters[0].Cost                         // remove cost from exp
 					playCharacters[0].Cost += consts.UpgradeIncreases[playCharacters[0].ID] // increase cost
 					mainAbilitySum = sum(playCharacters[0].AbilityLevel)
-					mainAbilityIndex = 1
 					if mainAbilitySum < 100 {
 						for mainAbilityIndex == 1 || playCharacters[0].AbilityLevel[mainAbilityIndex] >= 10 { // reroll ability index
 							mainAbilityIndex = rand.Intn(len(playCharacters[0].AbilityLevel))
@@ -943,11 +727,6 @@ func PostGameResults(helper *helper.Helper) {
 					playCharacters[0].Exp -= playCharacters[0].Cost
 				}
 			}
-			playCharacters[0].AbilityLevelUp = AbilityLevelUpIDMain         // array of abilities to level up
-			playCharacters[0].AbilityLevelUpExp = AbilityLevelUpXPValueMain //  array of XP Values in the level up screeen, should always be character.Cost
-		}
-		if playCharacters[0].Star >= int64(11) { // Somehow, someone actually got Limit Smash 13, let's reset it back to 10
-		playCharacters[0].Star = int64(10)
 		}
 		if hasSubCharacter {
 			if playCharacters[1].Level < 100 {
@@ -957,12 +736,9 @@ func PostGameResults(helper *helper.Helper) {
 					if playCharacters[1].Level < 100 {
 						playCharacters[1].Level++                                               // increase level
 						playCharacters[1].AbilityLevel[subAbilityIndex]++                       // increase ability level
-						AbilityLevelUpXPValueSub = append(AbilityLevelUpXPValueSub, int64(playCharacters[1].Cost))
-						AbilityLevelUpIDSub = append(AbilityLevelUpIDSub, 120000 + int64(subAbilityIndex))
 						playCharacters[1].Exp -= playCharacters[1].Cost                         // remove cost from exp
 						playCharacters[1].Cost += consts.UpgradeIncreases[playCharacters[1].ID] // increase cost
 						subAbilitySum = sum(playCharacters[1].AbilityLevel)
-						subAbilityIndex = 1
 						if subAbilitySum < 100 {
 							for subAbilityIndex == 1 || playCharacters[1].AbilityLevel[subAbilityIndex] >= 10 { // reroll ability index
 								subAbilityIndex = rand.Intn(len(playCharacters[1].AbilityLevel))
@@ -973,38 +749,6 @@ func PostGameResults(helper *helper.Helper) {
 						playCharacters[1].Exp -= playCharacters[1].Cost
 					}
 				}
-				playCharacters[1].AbilityLevelUp = AbilityLevelUpIDSub         // array of abilities to level up
-				playCharacters[1].AbilityLevelUpExp = AbilityLevelUpXPValueSub //  array of XP Values in the level up screeen, should always be character.Cost
-			}
-			if playCharacters[1].Star >= int64(11) { // Somehow, someone actually got Limit Smash 13, let's reset it back to 10
-			playCharacters[1].Star = int64(10)
-			}
-		}
-		player.PlayerState.MainCharaLevel = playCharacters[0].Level
-		hasMainChao := player.PlayerState.MainChaoID != "none"
-		hasSubChao := player.PlayerState.SubChaoID != "none"
-		var subCh netobj.Chao
-		if hasMainChao{
-			mainCh, err := player.GetMainChao()
-			if err != nil {
-				helper.InternalErr("Error getting main character", err)
-				return
-			}
-			playChao := []netobj.Chao{ // assume only main character active right now
-				mainCh,
-			}
-			player.PlayerState.MainChaoLevel = playChao[0].Level
-			if hasSubChao {
-				subCh, err = player.GetSubChao()
-				if err != nil {
-					helper.InternalErr("Error getting sub character", err)
-					return
-				}
-				playChao = []netobj.Chao{ // add sub character to playCharacters
-					mainCh,
-					subCh,
-				}
-				player.PlayerState.SubChaoLevel = playChao[1].Level
 			}
 		}
 
@@ -1021,151 +765,107 @@ func PostGameResults(helper *helper.Helper) {
 			helper.DebugOut("New subC Level: %v", playCharacters[1].Level)
 		}
 
-		doStoryProgression := true
-		helper.DebugOut("Event ID: %v", request.EventID)
-		if request.EventID > 0 { // Is this an event stage?
-			if strconv.Itoa(int(request.EventID))[:1] == "1" || strconv.Itoa(int(request.EventID))[:1] == "2" {
-				// This is a special stage; don't do story progression since it'll screw with the current point.
-				helper.DebugOut("Special Stage; disabling story progression!")
-				doStoryProgression = false
-			} else {
-				helper.DebugOut("Event Type %s (story progression enabled)", strconv.Itoa(int(request.EventID))[1:])
+		player.MileageMapState.StageTotalScore += request.Score
+
+		goToNextChapter := request.ChapterClear == 1
+		chaoEggs := request.GetChaoEgg
+		player.PlayerState.ChaoEggs += chaoEggs
+		if chaoEggs > 0 || player.PlayerState.ChaoEggs >= 10 {
+			player.ChaoRouletteGroup.ChaoWheelOptions = netobj.DefaultChaoWheelOptions(player.PlayerState) // create a new wheel
+			if player.PlayerState.ChaoEggs >= 10 {
+				player.PlayerState.ChaoEggs = 10
 			}
-			helper.DebugOut("Player got %v event object(s)", request.EventValue)
-			obtainedRewards, rewardIDMarker := constobjs.GetPendingEventRewards(player.EventState.Param, player.EventState.Param+request.EventValue)
-			player.EventState.Param += request.EventValue
-			for _, reward := range obtainedRewards {
-				itemid, err := strconv.Atoi(reward.ID)
-				if err != nil {
-					// wtf
-					helper.DebugOut("Failed to obtain reward ID %v!", reward.RewardID)
-					continue
-				}
-				helper.DebugOut("Obtained the %v-object reward! (reward ID %v)", reward.Param, reward.RewardID)
-				player.AddOperatorMessage(
-					"An event reward.",
-					obj.NewMessageItem(
-						int64(itemid),
-						reward.Amount,
-						0,
-						0,
-					),
-					2592000,
-				)
-			}
-			player.EventState.RewardID = rewardIDMarker
 		}
-		if doStoryProgression {
-			player.MileageMapState.StageTotalScore += request.Score
-			player.MileageMapState.StageDistance += request.Distance
-			if request.Score > player.MileageMapState.StageMaxScore {
-				player.MileageMapState.StageMaxScore = request.Score
-			}
 
-			goToNextChapter := request.ChapterClear == 1
-			chaoEggs := request.GetChaoEgg
-			player.PlayerState.ChaoEggs += chaoEggs
-			if chaoEggs > 0 || player.PlayerState.ChaoEggs >= 10 {
-				player.ChaoRouletteGroup.ChaoWheelOptions = netobj.DefaultChaoWheelOptions(player.PlayerState) // create a new wheel
-				if player.PlayerState.ChaoEggs >= 10 {
-					player.PlayerState.ChaoEggs = 10
+		// TODO: Add chao eggs to player
+		newPoint := request.ReachPoint
+
+		goToNextEpisode := true
+		if goToNextChapter {
+			// Assumed this just means next episode...
+			player.PlayerState.Rank++
+			if player.PlayerState.Rank > 998 { // rank going above 999
+				player.PlayerState.Rank = 998
+			}
+			if player.PlayerState.Energy < player.PlayerVarious.EnergyRecoveryMax {
+				player.PlayerState.Energy = player.PlayerVarious.EnergyRecoveryMax //restore energy
+			}
+			player.MileageMapState.Point = 0
+			player.MileageMapState.StageTotalScore = 0
+			maxChapters, episodeHasMultipleChapters := consts.EpisodeWithChapters[player.MileageMapState.Episode]
+			if episodeHasMultipleChapters {
+				goToNextEpisode = false
+				player.MileageMapState.Chapter++
+				if player.MileageMapState.Chapter > maxChapters {
+					// there's no more chapters for this episode!
+					goToNextEpisode = true
 				}
 			}
-
-			newPoint := request.ReachPoint
-
-			goToNextEpisode := true
-			if goToNextChapter {
-				// Assumed this just means next episode...
-				player.PlayerState.Rank++
-				if player.PlayerState.Rank > 998 { // rank going above 999
-					player.PlayerState.Rank = 998
-				}
-				if player.PlayerState.Energy < player.PlayerVarious.EnergyRecoveryMax {
-					player.PlayerState.Energy = player.PlayerVarious.EnergyRecoveryMax //restore energy
-				}
-				player.MileageMapState.Point = 0
-				player.MileageMapState.StageMaxScore = 0
-				player.MileageMapState.StageTotalScore = 0
-				player.MileageMapState.StageDistance = 0
-				player.MileageMapState.ChapterStartTime = time.Now().UTC().Unix()
-				maxChapters, episodeHasMultipleChapters := consts.EpisodeWithChapters[player.MileageMapState.Episode]
-				if episodeHasMultipleChapters {
-					goToNextEpisode = false
-					player.MileageMapState.Chapter++
-					if player.MileageMapState.Chapter > maxChapters {
-						// there's no more chapters for this episode!
-						goToNextEpisode = true
-					}
-				}
-				if goToNextEpisode {
-					player.MileageMapState.Episode++
-					player.MileageMapState.Chapter = 1
-					helper.DebugOut("goToNextEpisode -> Episode: %v", player.MileageMapState.Episode)
-					if config.CFile.Debug {
-						player.MileageMapState.Episode = 11
-					}
-				}
-			} else {
-				player.MileageMapState.Point = newPoint
-			}
-			/*if config.CFile.Debug {
-				if player.MileageMapState.Episode < 11 {
-					//player.MileageMapState.Episode = 11
-				}
-			}*/
-			newRewardEpisode = player.MileageMapState.Episode
-			newRewardChapter = player.MileageMapState.Chapter
-			newRewardPoint = player.MileageMapState.Point
-			if goToNextChapter && goToNextEpisode && player.MileageMapState.Episode > 50 { // if beat game, reset to 50-1
-				player.MileageMapState.Episode = 50
+			if goToNextEpisode {
+				player.MileageMapState.Episode++
 				player.MileageMapState.Chapter = 1
-				helper.DebugOut("goToNextEpisode: Player (%s) beat the game!", player.ID)
-			}
-			// add rewards to PlayerState
-			wonRewards := campaign.GetWonRewards(oldRewardEpisode, oldRewardChapter, oldRewardPoint, newRewardEpisode, newRewardChapter, newRewardPoint)
-			helper.DebugOut("wonRewards length: %v", wonRewards)
-			helper.DebugOut("Previous red rings: %v", player.PlayerState.NumRings)
-			helper.DebugOut("Previous rings: %v", player.PlayerState.NumRings)
-			newItems := player.PlayerState.Items
-			for _, reward := range wonRewards { // TODO: This is O(n^2). Maybe alleviate this?
-				helper.DebugOut("Reward: %s", reward.ItemID)
-				helper.DebugOut("Reward amount: %v", reward.NumItem)
-				if reward.ItemID[:2] == "12" { // ID is an item
-					// check if the item is already in the player's inventory
-					itemIndex := player.IndexOfItem(reward.ItemID)
-					if itemIndex != -1 {
-						player.PlayerState.Items[itemIndex].Amount += reward.NumItem
-					} else {
-						helper.Warn("Unknown item reward '%s'", reward.ItemID)
-					}
-				} else if reward.ItemID == strconv.Itoa(enums.ItemIDRing) { // Rings
-					player.PlayerState.NumRings += reward.NumItem
-				} else if reward.ItemID == strconv.Itoa(enums.ItemIDRedRing) { // Red rings
-					player.PlayerState.NumRedRings += reward.NumItem
-				} else if reward.ItemID == enums.CTStrTails { // Tails node
-					tailsIndex := player.IndexOfChara(enums.CTStrTails)
-					player.CharacterState[tailsIndex].Status = enums.CharacterStatusUnlocked
-				} else if reward.ItemID == enums.CTStrKnuckles { // Knuckles node
-					knucklesIndex := player.IndexOfChara(enums.CTStrKnuckles)
-					player.CharacterState[knucklesIndex].Status = enums.CharacterStatusUnlocked
-				} else {
-					helper.Warn("Unknown reward '%s', ignoring", reward.ItemID)
+				helper.DebugOut("goToNextEpisode -> Episode: %v", player.MileageMapState.Episode)
+				if config.CFile.Debug {
+					player.MileageMapState.Episode = 11
 				}
-				// TODO: allow for any character joining the cast, for custom story episodes
 			}
-			helper.DebugOut("Current rings: %v", player.PlayerState.NumRings)
-			player.PlayerState.Items = newItems
 		} else {
-			incentives = []obj.MileageIncentive{}
+			player.MileageMapState.Point = newPoint
 		}
-
-		helper.DebugOut("Chapter: %v", player.MileageMapState.Chapter)
-		helper.DebugOut("Episode: %v", player.MileageMapState.Episode)
-		helper.DebugOut("StageTotalScore: %v", player.MileageMapState.StageTotalScore)
-		helper.DebugOut("Point: %v", player.MileageMapState.Point)
-		helper.DebugOut("request.Score: %v", request.Score)
+		/*if config.CFile.Debug {
+			if player.MileageMapState.Episode < 11 {
+				//player.MileageMapState.Episode = 11
+			}
+		}*/
+		newRewardEpisode = player.MileageMapState.Episode
+		newRewardChapter = player.MileageMapState.Chapter
+		newRewardPoint = player.MileageMapState.Point
+		if goToNextChapter && goToNextEpisode && player.MileageMapState.Episode > 50 { // if beat game, reset to 50-1
+			player.MileageMapState.Episode = 50
+			player.MileageMapState.Chapter = 1
+			helper.DebugOut("goToNextEpisode: Player (%s) beat the game!", player.ID)
+		}
+		// add rewards to PlayerState
+		wonRewards := campaign.GetWonRewards(oldRewardEpisode, oldRewardChapter, oldRewardPoint, newRewardEpisode, newRewardChapter, newRewardPoint)
+		helper.DebugOut("wonRewards length: %v", wonRewards)
+		helper.DebugOut("Previous red rings: %v", player.PlayerState.NumRings)
+		helper.DebugOut("Previous rings: %v", player.PlayerState.NumRings)
+		newItems := player.PlayerState.Items
+		for _, reward := range wonRewards { // TODO: This is O(n^2). Maybe alleviate this?
+			helper.DebugOut("Reward: %s", reward.ItemID)
+			helper.DebugOut("Reward amount: %v", reward.NumItem)
+			if reward.ItemID[:2] == "12" { // ID is an item
+				// check if the item is already in the player's inventory
+				itemIndex := player.IndexOfItem(reward.ItemID)
+				if itemIndex != -1 {
+					player.PlayerState.Items[itemIndex].Amount += reward.NumItem
+				} else {
+					helper.Warn("Unknown item reward '%s'", reward.ItemID)
+				}
+			} else if reward.ItemID == strconv.Itoa(enums.ItemIDRing) { // Rings
+				player.PlayerState.NumRings += reward.NumItem
+			} else if reward.ItemID == strconv.Itoa(enums.ItemIDRedRing) { // Red rings
+				player.PlayerState.NumRedRings += reward.NumItem
+			} else if reward.ItemID == enums.CTStrTails { // Tails node
+				tailsIndex := player.IndexOfChara(enums.CTStrTails)
+				player.CharacterState[tailsIndex].Status = enums.CharacterStatusUnlocked
+			} else if reward.ItemID == enums.CTStrKnuckles { // Knuckles node
+				knucklesIndex := player.IndexOfChara(enums.CTStrKnuckles)
+				player.CharacterState[knucklesIndex].Status = enums.CharacterStatusUnlocked
+			} else {
+				helper.Warn("Unknown reward '%s', ignoring", reward.ItemID)
+			}
+			// TODO: allow for any character joining the cast, for custom story episodes
+		}
+		helper.DebugOut("Current rings: %v", player.PlayerState.NumRings)
+		player.PlayerState.Items = newItems
 	}
+
+	helper.DebugOut("Chapter: %v", player.MileageMapState.Chapter)
+	helper.DebugOut("Episode: %v", player.MileageMapState.Episode)
+	helper.DebugOut("StageTotalScore: %v", player.MileageMapState.StageTotalScore)
+	helper.DebugOut("Point: %v", player.MileageMapState.Point)
+	helper.DebugOut("request.Score: %v", request.Score)
 
 	mainCIndex := player.IndexOfChara(mainC.ID) // TODO: check if -1
 	subCIndex := -1
@@ -1175,15 +875,8 @@ func PostGameResults(helper *helper.Helper) {
 
 	baseInfo := helper.BaseInfo(emess.OK, status.OK)
 	response := responses.DefaultPostGameResults(baseInfo, player, playCharacters, incentives)
-	eresponse := responses.DefaultPostGameResultsEvent(baseInfo, player, playCharacters, incentives, []obj.Item{}, player.EventState)
 	//response.BaseResponse = responses.NewBaseResponseV(baseInfo, request.Version)
-	if request.EventID > 0 {
-		helper.DebugOut("Sent event response")
-		err = helper.SendResponse(eresponse)
-	} else {
-		helper.DebugOut("Sent non-event response")
-		err = helper.SendResponse(response)
-	}
+	err = helper.SendResponse(response)
 	if err != nil {
 		helper.InternalErr("Error sending response", err)
 		return

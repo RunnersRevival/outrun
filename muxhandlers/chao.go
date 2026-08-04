@@ -166,7 +166,7 @@ func CommitChaoWheelSpin(helper *helper.Helper) {
 	availStatus := status.OK
 	// set initial prize
 	prize := netobj.CharacterIDToChaoSpinPrize("0") // This will almost certainly give the game errors if improperly counting payment!
-	spinResults := []netobj.ChaoSpinResult{}        // In 1.1.4, this *wasn't* an array. It was made into an array to facilitate multispin
+	spinResults := []netobj.ChaoSpinResult{}        // TODO: Find out why it's an array
 
 	helper.DebugOut("PRE")
 	helper.DebugOut("Items: %s", items)
@@ -194,7 +194,7 @@ func CommitChaoWheelSpin(helper *helper.Helper) {
 				player.PlayerState.NumChaoRouletteTicket -= consts.ChaoRouletteTicketCost * request.Count // spend ticket(s)
 			} else {
 				player.PlayerState.ChaoEggs -= 10
-				actions = 1 // ensure we only spin once for the free spin; the game doesn't reset the selected spin count on getting into the free spin
+				actions = 1 // ensure we only spin once for the free spin
 			}
 		} else { // paying with red ring(s)
 			player.PlayerState.NumRedRings -= consts.ChaoRouletteRedRingCost * request.Count // spend red ring(s)
@@ -259,12 +259,10 @@ func CommitChaoWheelSpin(helper *helper.Helper) {
 					prizeChaoLevel := int64(rand.Intn(highRange-lowRange+1) + lowRange) // This level is added to the current Chao level
 					if player.ChaoState[chaoIndex].Level < 10 {
 						player.ChaoState[chaoIndex].Level += prizeChaoLevel
-						player.ChaoState[chaoIndex].Acquired += prizeChaoLevel
 						if player.ChaoState[chaoIndex].Level > 10 { // if max chao level (https://www.deviantart.com/vocaloidbrsfreak97/journal/So-Sonic-Runners-just-recently-updated-574789098)
 							excess := player.ChaoState[chaoIndex].Level - 10              // get amount gone over
 							prizeChaoLevel -= excess                                      // shave it from prize level
 							player.ChaoState[chaoIndex].Level = 10                        // reset to maximum
-							player.ChaoState[chaoIndex].Acquired -= excess
 							player.ChaoState[chaoIndex].Status = enums.ChaoStatusMaxLevel // set status to MaxLevel
 						}
 					} else {
@@ -316,7 +314,7 @@ func CommitChaoWheelSpin(helper *helper.Helper) {
 		player.ChaoRouletteGroup.ChaoWheelOptions = netobj.DefaultChaoWheelOptions(player.PlayerState) // create a new wheel
 		newRarities, ok := fixRarities(player.ChaoRouletteGroup.ChaoWheelOptions.Rarity)
 		if !ok { // if player is entirely unable to upgrade anything
-			// TODO: this method is super-hacky - ideally we'd want to return an error code for this situation
+			// TODO: this is probably not the right way to do this!
 			player.ChaoRouletteGroup.ChaoWheelOptions.SpinCost = player.PlayerState.NumChaoRouletteTicket + player.PlayerState.NumRedRings // make it impossible for player to use roulette
 		} else { // if player can upgrade
 			player.ChaoRouletteGroup.ChaoWheelOptions.Rarity = newRarities

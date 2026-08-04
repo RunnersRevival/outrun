@@ -7,9 +7,9 @@ import (
 	"encoding/base64"
 )
 
-func B64Decode(s string) ([]byte, error) {
-	result, err := base64.StdEncoding.DecodeString(s)
-	return result, err
+func B64Decode(s string) []byte {
+	result, _ := base64.StdEncoding.DecodeString(s)
+	return result
 }
 
 func B64Encode(b []byte) string {

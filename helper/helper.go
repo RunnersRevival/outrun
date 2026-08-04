@@ -54,10 +54,7 @@ func MakeHelper(callerName string, r http.ResponseWriter, request *http.Request)
 }
 
 func (r *Helper) GetGameRequest() []byte {
-	recv, err := cryption.GetReceivedMessage(r.Request)
-	if err != nil {
-		r.SendCompatibleResponse(responses.NewBaseResponse(r.BaseInfo(emess.OK, status.DecryptionFailure)), false)
-	}
+	recv := cryption.GetReceivedMessage(r.Request)
 	return recv
 }
 func (r *Helper) SendResponse(i interface{}) error {
@@ -109,33 +106,6 @@ func (r *Helper) RespondRaw(out []byte, secureFlag, iv string) {
 		return
 	}
 	r.RespW.Write(toClient)
-}
-// TY Fairplay :pray: :pray: :pray:
-func (r *Helper) SendCompatibleResponse(out interface{}, sendErrorResponseOnError bool) error {
-	response := map[string]interface{}{"secure": "0", "param": out}
-	toClient, err := json.Marshal(response)
-	if err != nil {
-		if sendErrorResponseOnError {
-			r.SendCompatibleResponse(responses.NewBaseResponse(r.BaseInfo(emess.OK, status.InvalidResponse)), false)
-		}
-		r.InternalErr("Error marshalling in SendCompatibleResponse", err)
-		return err
-	}
-	if config.CFile.LogAllResponses {
-		nano := time.Now().UnixNano()
-		nanoStr := strconv.Itoa(int(nano))
-		filename := r.Request.RequestURI + "--" + nanoStr
-		filename = strings.ReplaceAll(filename, ".", "-")
-		filename = strings.ReplaceAll(filename, "/", "-") + ".txt"
-		filepath := "logging/all_responses/" + filename
-		r.Out("DEBUG: Saving response to " + filepath)
-		err := ioutil.WriteFile(filepath, toClient, 0644)
-		if err != nil {
-			r.Out("DEBUG ERROR: Unable to write file '" + filepath + "'")
-		}
-	}
-	r.RespW.Write(toClient)
-	return nil
 }
 func (r *Helper) Respond(out []byte) {
 	r.RespondRaw(out, "1", DefaultIV)

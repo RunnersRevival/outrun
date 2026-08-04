@@ -25,10 +25,7 @@ const (
 	CharaTypeTikal
 	CharaTypeMephiles
 	CharaTypePSISilver
-	CharaTypeMarine
-	CharaTypeTangle
-	CharaTypeWhisper
-	CharaTypeAmitieAmy = iota + 301000 - 25 // event characters start with 301
+	CharaTypeAmitieAmy = iota + 301000 - 22 // 300021 is not the correct ID for Amitie Amy.
 	CharaTypeGothicAmy
 	CharaTypeHalloweenShadow
 	CharaTypeHalloweenRouge
@@ -36,7 +33,6 @@ const (
 	CharaTypeXMasSonic
 	CharaTypeXMasTails
 	CharaTypeXMasKnuckles
-  CharaTypeXT
 )
 
 const (
@@ -61,9 +57,6 @@ const (
 	CTStrTikal           = "300018"
 	CTStrMephiles        = "300019"
 	CTStrPSISilver       = "300020"
-	CTStrMarine          = "300021"
-	CTStrTangle          = "300022"
-	CTStrWhisper         = "300023"
 	CTStrAmitieAmy       = "301000"
 	CTStrGothicAmy       = "301001"
 	CTStrHalloweenShadow = "301002"
@@ -72,5 +65,4 @@ const (
 	CTStrXMasSonic       = "301005"
 	CTStrXMasTails       = "301006"
 	CTStrXMasKnuckles    = "301007"
-  CTStrXT              = "301008"
 )

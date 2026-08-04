@@ -13,20 +13,20 @@ func ConfiguredCampaignToCampaign(cc campaignconf.ConfiguredCampaign) obj.Campai
 	startTime := cc.StartTime
 	switch startTime {
 	case -2:
-		startTime = now.BeginningOfDay().UTC().Unix()
+		startTime = now.BeginningOfDay().Unix()
 	case -3:
-		startTime = now.EndOfDay().UTC().Unix()
+		startTime = now.EndOfDay().Unix()
 	case -4:
-		startTime = time.Now().UTC().Unix() - 1
+		startTime = time.Now().Unix() - 1
 	}
 	endTime := cc.EndTime
 	switch endTime {
 	case -2:
-		endTime = now.BeginningOfDay().UTC().Unix()
+		endTime = now.BeginningOfDay().Unix()
 	case -3:
-		endTime = now.EndOfDay().UTC().Unix()
+		endTime = now.EndOfDay().Unix()
 	case -4:
-		endTime = time.Now().UTC().Add(24 * time.Hour).Unix()
+		endTime = time.Now().Add(24 * time.Hour).Unix()
 	}
 	newEvent := obj.Campaign{
 		cc.RealType(),
